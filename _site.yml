@@ -6,10 +6,15 @@ navbar:
   left:
     - text: "Home"
       href: index.html
-    - text: "Overview"
+    - text: "Start Here"
       href: overview.html
-    - text: "Week 1"
-      href: w1.html
+  right:
+    - icon: fa-github
+      href: "https://github.com/ericpgreen/ieat-covid2020"
+    - icon: ion-social-twitter
+      href: "https://twitter.com/ericpgreen"
+    - icon: fa-envelope-o
+      href: "mailto:eric.green@duke.edu"
 output:
   html_document:
     theme: yeti

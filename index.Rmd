@@ -1,5 +1,6 @@
 ---
 title: "I Eat Data Science for Breakfast"
+subtitle: "Pandemic 2020 Edition"
 output:
   html_document:
     toc_float: false
