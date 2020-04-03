@@ -94,7 +94,9 @@ We'll reproduce interesting plots we find online as a way to motivate learning R
 * If you have an external monitor: 
   * Move your web browser window to your main monitor
   * Move the Zoom/video window to your secondary monitor
-* This setup also works if you have a tablet that can be a secondary display (possible with a Mac and some iPads (Pro, ≥iPad 6, ≥iPad mini 5, ≥iPad Air 3) via [Sidecar](https://support.apple.com/en-us/HT210380))
+* If you have a second device like a tablet: 
+  * Open your web browser on your computer
+  * Connect to Zoom/video from your device
 * <span style="color:#1f9ac9;">**If you only have one screen, learn the keyboard shortcut to toggle between Zoom/video and your web broswer**</span>
   * Mac: command + tab (plus means "and" not plus key)
   * Windows: Alt + Tab

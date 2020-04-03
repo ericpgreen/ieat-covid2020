@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Libre+Franklin:200');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:600');
+
+/**
+  * 
+  */
+  html * {
+    color-profile: sRGB;
+    rendering-intent: auto; }
+
+/*********************************************
+  * GLOBAL STYLES
+*********************************************/
+  
+      .reveal section h1 h2 {
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 47px;
+        font-weight: 600;
+        color: #1f9ac9; }
+        
+      .reveal {
+        font-family: 'Libre Franklin', sans-serif;
+        font-size: 35px;
+        font-weight: 200;
+        color: #0f0f0f; }
+          
