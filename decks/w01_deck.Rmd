@@ -1,0 +1,105 @@
+---
+pagetitle: Week 1
+output: 
+  revealjs::revealjs_presentation:
+    theme: white
+    highlight: tango
+    center: true
+    transition: none
+    reveal_options:
+      progress: true
+      slideNumber: true
+    css: ../styles-reveal.css
+---
+
+## {data-background="w01-cover.png"}
+
+<style type="text/css">
+p { text-align: left; }
+</style>
+
+## Welcome
+
+<center>
+This workshop is for everyone. YMMV.
+</center>
+
+## About me
+
+<center>
+I'm a faculty member at Duke's Global Health Institute. <span style="color:#1f9ac9;">**I'm not an epidemiologist.**</span> My training is in clinical psychology, I teach courses on research methods, I study behavior change, and I dabble in data science.
+</center>
+
+## About you
+
+## Goals
+
+* To make you feel productive while obsessing over COVID-19 charts
+* To get you using R
+* To teach you enough about data science to know where to go next
+
+## Not Goals
+
+We'll reproduce interesting plots we find online as a way to motivate learning R and data science. Some of these plots will be wrong. <span style="color:#1f9ac9;">**The goal is NOT to inform public debate about COVID-19.**</span>
+
+## Format
+
+* Weekly live lesson via Zoom, Fridays at 9am ET
+* Office hours Wednesdays at 9am ET
+* Didactic bits with in-session coding practice
+* Weekly challenge assignment (optional)
+
+## Weekly Roadmap*
+
+1. <span style="color:#1f9ac9;">**Getting started with R and RStudio**</span>
+2. Getting to know `{ggplot2}`
+3. Importing and transforming data
+4. Exploratory data analysis
+5. Interactive and animated plots
+6. Relational data
+7. Text mining
+8. Flexdashboards (and shiny apps)
+9. Tidymodels
+10. Reproducible workflows
+
+<span style="color:#1f9ac9;font-size: 70%;">\*\ subject to change</span>
+
+## Today's plan
+
+* Introduce you to R and RStudio
+* Make our first plot
+* Sell you on the concept of a reproducible workflow
+
+## Today's plot inspiration
+
+<center>
+<img src="../img/ftplot.jpeg" style="border: 0;">
+</center>
+
+## Today's plot goal
+
+<center>
+<img src="../img/wk01-goal.png" style="border: 0;">
+</center>
+  
+## RStudio Cloud
+
+<center>
+<img src="../img/rstudio-cloud.png" style="border: 0;">
+</center>
+
+## Getting set up
+
+* Open a web browser and sign in to RStudio Cloud
+* If you have an external monitor: 
+  * Move your web browser window to your main monitor
+  * Move the Zoom/video window to your secondary monitor
+* This setup also works if you have a tablet that can be a secondary display (possible with a Mac and some iPads (Pro, ≥iPad 6, ≥iPad mini 5, ≥iPad Air 3) via [Sidecar](https://support.apple.com/en-us/HT210380))
+* <span style="color:#1f9ac9;">**If you only have one screen, learn the keyboard shortcut to toggle between Zoom/video and your web broswer**</span>
+  * Mac: command + tab (plus means "and" not plus key)
+  * Windows: Alt + Tab
+
+## RStudio {data-background="#1f9ac9"}
+
+
+
