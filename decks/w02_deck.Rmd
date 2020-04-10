@@ -79,11 +79,3 @@ p { text-align: left; }
 
 ## RStudio {data-background="#1f9ac9"}
 
-
-
-## Wide format
-
-<center>
-<img src="../img/wide_excel.png" style="border: 0;">
-</center>
-

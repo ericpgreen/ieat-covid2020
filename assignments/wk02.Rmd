@@ -1,5 +1,5 @@
 ---
-author: "Your name here"
+author: "Eric Green"
 title: "Plotting with ggplot2"
 output:
   bookdown::pdf_document2:
@@ -12,7 +12,8 @@ csl: apa.csl
 ```{r setup, include=FALSE}
   library(knitr)
   library(tidyverse)
-  knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+  knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE,
+                        dev = "cairo_pdf")
 ```
 
 <!-- This is a comment in markdown, which is different from a comment in R #
@@ -52,7 +53,7 @@ There's a lot going on in this paper, so I grabbed just the bits we need to crea
 # so what is the full path to the file (including the file name)?
 
 # this line will fail until you replace ____
-  df <- read.csv("____", stringsAsFactors = FALSE)
+  df_wide <- read.csv("data/riou-covid-wide.csv", stringsAsFactors = FALSE)
 ```
 
 Open `df_wide` in the Viewer by clicking on the object name in the Environment.
@@ -217,8 +218,8 @@ That sucks. You want small multiples. Facets.
            y = "") +
   
   # here is the new piece
-  # try setting scales to "fixed_y" then "free_y" (remember quotes)
-    facet_wrap(~variable, scales = )
+  # try setting scales to "fixed" then "free_y" (remember quotes)
+    facet_wrap(~variable, scales = "fixed")
 ```
 ## Coordinates
 
