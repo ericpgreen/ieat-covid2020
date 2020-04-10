@@ -1,0 +1,316 @@
+---
+author: "Your name here"
+title: "Plotting with ggplot2"
+output:
+  bookdown::pdf_document2:
+    toc: true
+    number_sections: true
+bibliography: wk02.bib
+csl: apa.csl
+---
+
+```{r setup, include=FALSE}
+  library(knitr)
+  library(tidyverse)
+  knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+<!-- This is a comment in markdown, which is different from a comment in R #
+
+R won't see it. I promise.
+
+The command below that starts with a forward slash is for LaTeX, the typesetting engine that will work in the background to create the pdf when you click knit. It's a simple page break to make the main document section start on a new page after the TOC. Don't want a TOC? Turn it to FALSE in the YAML.
+
+-->
+
+\newpage
+
+# This week's inspiration
+
+This week's inspiration comes from a pre-print by @hauser:2020 that estimates SARS-CoV-2 mortality in two of the hardest hit regions early in the pandemic: Hubei province, China and northern Italy.[^notpr] I took a screenshot of Figure 1 Panel B from their manuscript.
+
+[^notpr]: This is a footnote to say that pre-prints like this one have not been peer reviewed.
+
+```{r inspiration, fig.cap="Figure 1 B from @hauser:2020.", out.height='40%', fig.align='center'}
+  knitr::include_graphics('img/jriou.png')
+```
+
+Inserting external images like this one is easy in RMarkdown. There are a few ways, but I recommend creating a code chunk and calling `include_graphics()` from the `{knitr}` package. Note that I added a figure caption and specified that I wanted to limit the height of the image. For some reason my reference is not formatting properly in the citation, but let's not worry about that now.
+
+\newpage
+
+# Get the data
+
+There's a lot going on in this paper, so I grabbed just the bits we need to create this plot. Visit the authors' Github repository to access the full data and code to reproduce their entire manuscript [@riou:2020].
+
+```{r}
+# find "riou-covid-wide.csv" in the Files tab and note the path to the file
+# replace ____ with the path to the file and the file name
+
+# you can run getwd() to see the working directory
+# but i'll save you a step: your working directory is "/cloud/project"
+# so what is the full path to the file (including the file name)?
+
+# this line will fail until you replace ____
+  df <- read.csv("____", stringsAsFactors = FALSE)
+```
+
+Open `df_wide` in the Viewer by clicking on the object name in the Environment.
+
+## Wide format
+
+You're probably used to working with data in a 'wide' format like you see in Figure \@ref(fig:wide). If you were to recreate this figure in Excel, you'd probably create the facets one by one by highlighting the column with age categories and one of the value columns. 
+
+```{r wide, fig.cap="Data in the wide format.", out.width='100%', fig.align='center', echo=FALSE}
+# echo=FALSE prevents printing this code in our report
+# when output is set to bookdown::pdf_document2, you can include cross-referenced tables and figures
+# in \@ref(fig:wide), wide refers to the name of the chunk
+
+  knitr::include_graphics('img/wide_excel.png')
+```
+
+## Long format
+
+For most `{ggplot2}` operations, however, you'll need to transform the data to a long format. Run the following chunk and inspect the object you create called `df_long`.
+
+```{r}
+# we'll more talk about functions like pivot_longer() next week
+# for now, just read this as a pipe that starts with the data, and then (%>%)..
+# does something (renames variables with rename()), and then (%>%)...
+# does something else (reshapes the data from wide to long with pivot_longer())
+
+  df_long <- 
+  df_wide %>%
+    rename(`prop_Chinese population` = pop,
+           `prop_Reported cases` = prop_cases_tmax,
+           `prop_Reported deaths` = prop_mort_tmax) %>%
+    pivot_longer(cols = -age_class,
+                 names_to = "variable",
+                 names_prefix = "prop_",
+                 values_to = "value"
+                )  
+
+  df_long
+```
+
+## Tidy data
+
+The result of `pivot_longer()` is a **tidy** dataframe. According to Hadley Wickham, RStudio's Chief Scientist and creator of many great packages like `{ggplot2}`, tidy data have three characteristics [@wickham:2014]:
+
+1. Each variable forms a column.
+2. Each observation forms a row.
+3. Each type of observational unit forms a table.
+
+This tidy format will make advanced plotting a breeze.
+
+\newpage
+
+# `ggplot()` basics
+
+`{ggplot2}` implements the Leland Wilkinson's "grammar of graphics" [@wilkinson:1999]. @layered-grammar describes the grammar of graphics as: 
+
+> ...a tool that enables us to concisely describe the components of a graphic. Such a grammar allows us to move beyond named graphics (e.g., the "scatterplot") and gain insight into the deep structure that underlies statistical graphics.
+
+*Hit play on the chunk so you can see the image that will become Figure \@ref(fig:gg) when knitted.*
+
+```{r gg, fig.cap="Source: Thomas Lin Pederson.", out.width='100%', fig.align='center', echo=FALSE, fig.pos='!ht'}
+# echo=FALSE prevents printing this code in our report
+# See Thomas's amazing workshop on ggplot2, https://github.com/thomasp85/ggplot2_workshop
+
+  knitr::include_graphics('img/thomas_ggplot.png')
+```
+
+## Data
+
+Every plot begins with data, but data alone do not make a plot as you can see in Figure \@ref(fig:blank).
+
+```{r blank, fig.cap="Nothing to see here.", out.width='50%', fig.align='center'}
+  ggplot(df_long)
+```
+
+## Mapping/Aesthetics
+
+The next step is to tell R how our data maps on to the plot with the `aes()` function. In our case, we want to plot proportions by age category. Let's filter the data to just the population data and forget for a moment that we're actually trying to create 3 panels.  
+
+```{r, fig.show='hide'}
+# fig.show='hide' will prevent the plot from printing to pdf
+
+# here's an example of piping from the data to ggplot
+# it's also an example of assigning the ggplot object 
+
+  p <- 
+  df_long %>%
+    filter(variable=="Chinese population") %>%
+    ggplot(., aes(x=age_class, y=value)) +
+      labs(title = "",
+           subtitle = "",
+           caption = "",
+           x = "",
+           y = "")
+
+# can print with p
+  p
+```
+
+Ultimately we want age on the y-axis for display purposes, but we'll start with age on x.[^new]
+
+[^new]: Starting in `{ggplot2}` 3.3.0 you no longer need to map to `x` and then flip the coordinates for some geoms: https://www.tidyverse.org/blog/2020/03/ggplot2-3-3-0/. 
+
+## Statistics
+
+Sometimes you need to perform some calculation on the data prior to plotting, but my preference is to do this in a pipeline prior to piping to `ggplot()`. In this example our data have already been summarized by age category, so we do not need to add a statistics layer. This would have been necessary if we had raw counts by age instead of proportions. 
+
+## Geometries
+
+"geoms", or geometric objects, tell R what type of plot you want to make. [There are a bunch of options](https://ggplot2.tidyverse.org/reference/#section-layer-geoms).
+
+```{r, fig.show='hide'}
+
+# try adding geom_point(), run the chunk, remove and add geom_col()
+  p + geom_col()
+```
+
+## Scales
+
+Last week we changed the scale of our plot from linear to exponential. Today we need to convert proportions to percentages and fiddle with the limits and breaks. 
+
+```{r, fig.show='hide'}
+  p <- 
+  p + 
+    geom_col() + 
+    scale_y_continuous(labels=scales::percent,
+                       limits = c(0, .3),
+                       breaks = c(seq(0, .3, .1)))
+  
+  p
+```
+
+## Facets
+
+A common mistake is to cram too much into one plot. I submit to you Exhibit A.
+
+```{r, fig.show='hide'}
+  df_long %>%
+    ggplot(., aes(x=age_class, y=value, fill=variable)) +
+    geom_col(position = 'dodge') + 
+    scale_y_continuous(labels=scales::percent,
+                       breaks = c(seq(0, .3, .1))) +
+    labs(title = "China's elderly are hardest hit by Covid-19",
+           subtitle = "Age distribution of the Chinese population and of the\nreported Covid-19 cases and deaths in Hubei, China.",
+           caption = "Data: Riou et al. (2020). https://github.com/jriou/covid_adjusted_cfr",
+           x = "Age group",
+           y = "") # I'm leaving blank because no axis title need
+```
+That sucks. You want small multiples. Facets.
+
+```{r, fig.show='hide'}
+
+  df_long %>%
+    ggplot(., aes(x=age_class, y=value)) + 
+    geom_col() + 
+    scale_y_continuous(labels=scales::percent,
+                       breaks = c(seq(0, .3, .1))) +
+    labs(title = "China's elderly are hardest hit by Covid-19",
+           subtitle = "Age distribution of the Chinese population and of the reported Covid-19 cases\nand deaths in Hubei, China.",
+           caption = "Data: Riou et al. (2020). https://github.com/jriou/covid_adjusted_cfr",
+           x = "Age group",
+           y = "") +
+  
+  # here is the new piece
+  # try setting scales to "fixed_y" then "free_y" (remember quotes)
+    facet_wrap(~variable, scales = )
+```
+## Coordinates
+
+Home stretch. Let's flip the plot so age group is on the y-axis.
+
+```{r, fig.show='hide'}
+
+  df_long %>%
+    ggplot(., aes(x=age_class, y=value)) + 
+    geom_col() + 
+    scale_y_continuous(labels=scales::percent,
+                       breaks = c(seq(0, .3, .1))) +
+    labs(title = "China's elderly are hardest hit by Covid-19",
+           subtitle = "Age distribution of the Chinese population and of the reported Covid-19 cases\nand deaths in Hubei, China.",
+           caption = "Data: Riou et al. (2020). https://github.com/jriou/covid_adjusted_cfr",
+           x = "", # some would argue removing this as well
+           y = "") +
+    facet_wrap(~variable) + # fixed is the default so we can leave it off
+  
+  # here is the new piece
+    coord_flip()
+```
+## Themes
+
+The `theme()` function can make a good plot a great plot. Often you can get 95% of the way to a solid plot if you use one of the built in themes. Just start typing the word 'theme' and RStudio will try and autocomplete.
+
+```{r, fig.show='hide'}
+
+  df_long %>%
+    ggplot(., aes(x=age_class, y=value)) + 
+    geom_col() + 
+    scale_y_continuous(labels=scales::percent,
+                       breaks = c(seq(0, .3, .1))) +
+    labs(title = "China's elderly are hardest hit by Covid-19",
+           subtitle = "Age distribution of the Chinese population and of the reported\nCovid-19 cases and deaths in Hubei, China.",
+           caption = "Data: Riou et al. (2020). https://github.com/jriou/covid_adjusted_cfr",
+           x = "", # some would argue removing this as well
+           y = "") +
+    facet_wrap(~variable) + 
+    coord_flip() +
+  
+  # here is the new piece
+    theme_minimal() +
+    theme(text = element_text('AvantGarde'),
+          strip.text = element_text(face = 'bold',
+                              hjust = 0),
+          plot.title = element_text(face = 'bold'),
+          plot.caption = element_text('mono',
+                                      size=7))
+```
+# Finalizing
+
+Figure \@ref(fig:final) is our goal.
+
+```{r final, fig.cap="Our final product.", out.width='100%', fig.align='center', echo=TRUE}
+
+  df_long %>%
+    ggplot(., aes(x=age_class, y=value)) + 
+    geom_col(colour="black", width=1) + 
+    aes(fill = as.factor(variable)) +
+    scale_fill_manual(values = c("seagreen", "darkcyan", "firebrick")) +
+    scale_y_continuous(labels=scales::percent,
+                       breaks = c(seq(0, .3, .1))) +
+    labs(title = "China's elderly are hardest hit by Covid-19",
+           subtitle = "Age distribution of the Chinese population and of the reported\nCovid-19 cases and deaths in Hubei, China.",
+           caption = "Data: Riou et al. (2020). https://github.com/jriou/covid_adjusted_cfr",
+           x = "", # some would argue removing this as well
+           y = "") +
+    facet_wrap(~variable) + 
+    coord_flip() +
+    theme_minimal() +
+    theme(text = element_text('AvantGarde'),
+          strip.text = element_text(face = 'bold',
+                              hjust = 0),
+          plot.title = element_text(face = 'bold'),
+          plot.caption = element_text('mono',
+                                      size=7),
+          legend.position = "none")
+```
+
+
+\newpage
+
+# References
+
+<!--
+
+Learn more about citations in RMarkdown:
+https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html
+
+Lots of reference styles: https://www.zotero.org/styles
+Just download and stick in your directory
+Set style in YAML at top
+
+-->

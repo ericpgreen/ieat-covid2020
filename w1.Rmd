@@ -24,3 +24,13 @@ knitr::include_graphics("img/wk01-plots.png")
 <iframe width="800" height="450" src="https://www.youtube.com/embed/fntu_jMsWWE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </center>
 
+<br>
+
+## Weekly Post-Session Challenge
+
+1. In the comments of the Rmd file there's a link to the NY Times Github repository. Go there and find the url to the raw CSV file for county-level data. Replace the url in the markdown file to grab county-level rather than state-level data. You can rename the objects if you wish ("st" refers to state in my naming scheme, so maybe use "co" if you make a change).
+
+2. Limit the data to the top 5 worst affected counties from 1 state in terms of deaths.
+
+3. Update the plot.
+

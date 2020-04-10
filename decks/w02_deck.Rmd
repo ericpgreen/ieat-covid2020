@@ -1,0 +1,89 @@
+---
+pagetitle: Week 2
+output: 
+  revealjs::revealjs_presentation:
+    theme: white
+    highlight: tango
+    center: true
+    transition: none
+    reveal_options:
+      progress: true
+      slideNumber: true
+    css: ../styles-reveal.css
+---
+
+## {data-background="w02-cover.png"}
+
+<style type="text/css">
+p { text-align: left; }
+</style>
+
+## Weekly Roadmap*
+
+1. Getting started with R and RStudio
+2. <span style="color:#1f9ac9;">**Plotting with `{ggplot2}`**</span>
+3. Importing and transforming data
+4. Exploratory data analysis
+5. Interactive and animated plots
+6. Relational data
+7. Text mining
+8. Flexdashboards (and shiny apps)
+9. Tidymodels
+10. Reproducible workflows
+
+<span style="color:#1f9ac9;font-size: 70%;">\*\ subject to change</span>
+
+## Today's plan
+
+* Explain the idea behind the grammar of graphics
+* Show you core ggplot2 functions
+* RMarkdown goal: output to pdf
+
+## Today's plot inspiration
+
+<center>
+<img src="../img/wk02-inspiration.png" style="border: 0;">
+</center>
+
+## Today's plot goal
+
+<center>
+<img src="../img/wk02-goal.png" style="border: 0;">
+</center>
+
+## The Grammar of Graphics
+
+<div style= "float:left;position: relative; top: -20px;left: -40px;">
+<img src="../img/wilkinson.jpg" style="border: 0;">
+</div>
+
+`{ggplot2}` implements the Leland Wilkinson's "grammar of graphics". Wickham (2010) describes the grammar of graphics as: 
+
+"...a tool that enables us to concisely describe the components of a graphic. Such a grammar allows us to move beyond named graphics (e.g., the "scatterplot") and gain insight into the deep structure that underlies statistical graphics."
+
+## The Grammar of Graphics
+
+<center>
+<img src="../img/thomas_ggplot.png" style="border: 0;">
+</center>
+
+<span style="font-size: 50%;">Source: Thomas Lin Pederson. Amazing workshop on `ggplot2`: https://github.com/thomasp85/ggplot2_workshop</span>
+
+## The Grammar of Graphics
+
+<center>
+<img src="../img/ggplot_gif.gif" style="border: 0;">
+</center>
+
+<span style="font-size: 50%;">Source: Thomas de Beus, https://tinyurl.com/sf8zude</span>
+
+## RStudio {data-background="#1f9ac9"}
+
+
+
+## Wide format
+
+<center>
+<img src="../img/wide_excel.png" style="border: 0;">
+</center>
+
