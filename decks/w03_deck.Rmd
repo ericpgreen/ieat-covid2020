@@ -1,0 +1,136 @@
+---
+pagetitle: Week 3
+output: 
+  revealjs::revealjs_presentation:
+    theme: white
+    highlight: tango
+    center: true
+    transition: none
+    reveal_options:
+      progress: true
+      slideNumber: true
+    css: ../styles-reveal.css
+bibliography: ../assignments/wk02.bib
+csl: ../apa.csl
+---
+
+## {data-background="w03-cover.png"}
+
+<style type="text/css">
+p { text-align: left; }
+</style>
+
+## Weekly Roadmap*
+
+1. Getting started with R and RStudio
+2. Plotting with `{ggplot2}`
+3. <span style="color:#1f9ac9;">**Importing and transforming data**</span>
+4. Exploratory data analysis
+5. Interactive and animated plots
+6. Mapping (will work in relational data)
+7. Text mining
+8. Flexdashboards (and shiny apps)
+9. Tidymodels
+10. Reproducible workflows
+
+<span style="color:#1f9ac9;font-size: 70%;">\*\ subject to change</span>
+
+## Today's plan
+
+* Show several methods for importing data
+* Demonstrate common `{dplyr}` functions for wrangling data
+* RMarkdown goal: output to Tufte handout
+
+## Today's plot inspiration
+
+<center>
+<img src="../img/wk03-inspiration.png" style="border: 0;" height=600>
+</center>
+
+## Today's plot goal
+
+<center>
+<img src="../img/wk03-goal.png" style="border: 0;" height=600>
+</center>
+
+## Importing data
+
+* Local files
+  * csv: `read.csv()`
+  * RData: `load()`
+  * Stata: `haven::read_dta()`
+  * SPSS: `haven::read_sav()`
+  * SAS: `haven::read_sas()`
+* Web
+  * csv: `read.csv(INSERT URL HERE)`
+  * Google Sheets: `googlesheets4::read_sheet()`
+  * APIs with `{httr}` and `{jsonlite}`
+  * web scraping with `{rvest}`
+
+## Tidy data
+
+Last week we talked about how tidy data facilitates plotting. According to Hadley Wickham, RStudio's Chief Scientist and creator of many great packages like `{ggplot2}`, tidy data have three characteristics [@wickham:2014]:
+
+1. Each variable forms a column.
+2. Each observation forms a row.
+3. Each type of observational unit forms a table.
+
+## `dplyr`
+
+<center>
+<img src="../img/dplyr.png" style="border: 0;">
+</center>
+
+https://dplyr.tidyverse.org/
+
+## `dplyr::mutate()`
+
+<center>
+<img src="../img/mutate.png" style="border: 0;">
+</center>
+
+adds new variables that are functions of existing variables
+
+## `dplyr::select()`
+
+<center>
+<img src="../img/select.png" style="border: 0;">
+</center>
+
+picks variables based on their names
+
+## `dplyr::filter()`
+
+<center>
+<img src="../img/filter.png" style="border: 0;">
+</center>
+
+picks cases based on their values
+
+## `dplyr::summarize()`
+
+<center>
+<img src="../img/summarize.png" style="border: 0;">
+</center>
+
+reduces multiple values down to a single summary
+
+## `dplyr::arrange()`
+
+<center>
+<img src="../img/arrange.png" style="border: 0;">
+</center>
+
+changes the ordering of the rows
+
+## `dplyr::distinct()`
+
+<center>
+<img src="../img/distinct.png" style="border: 0;">
+</center>
+
+keeps unique rows
+
+## RStudio {data-background="#1f9ac9"}
+
+## References

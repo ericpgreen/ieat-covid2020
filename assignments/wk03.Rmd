@@ -1,0 +1,301 @@
+---
+title: "Week 3"
+author: "Your name here"
+date: "`r Sys.Date()`"
+output: tint::tintPdf
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+  library(knitr)
+  library(tidyverse)
+  library(readxl)
+  library(haven)
+  library(googlesheets4)
+  library(rvest)
+  library(jsonlite)
+  library(lubridate)
+  library(tibbletime)
+  sheets_deauth()
+
+  knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE,
+                        dev = "cairo_pdf")
+```
+
+# Introduction
+
+Today we're going to reproduce a [heatmap from the BBC](https://www.bbc.com/news/world-51235105), use the BBC's [`{bbplot}`](https://github.com/bbc/bbplot) package for plot styling, and output to a [Tufte-style handout](https://rmarkdown.rstudio.com/tufte_handout_format.html%23comment-1582377678%2F) with modifications provided by the [`{tint}`](https://eddelbuettel.github.io/tint/tintHTML.html) package. Along the way we're going to learn more about how to import, wrangle, and tidy data. 
+
+```{r inspiration, fig.cap="Look at that, a figure in the margins.", fig.margin=TRUE, out.width='100%', echo=FALSE}
+  knitr::include_graphics('img/wk03-inspiration.png')
+```
+
+The data for today's plot come from the [JHU Center for Systems Science and Engineering data repository](https://github.com/CSSEGISandData/COVID-19).
+
+# Importing data
+
+If you can find data, you can import into R. Even shitty little Stata files.
+
+## Load local files
+
+You're probably used to storing data on your computer and opening with software programs like Excel, SAS, SPSS, etc, so let's start there. All you need are two pieces of information:
+
+1. The type of file so we can use the correct function.
+2. The file path.
+
+R is picky with file names. 'Almost correct' does not cut it. You can't have extra spaces, typos, or letters in the wrong case. The same applies to paths to the files. We're working in project, so R thinks the root directory is `/cloud/project`. You can see that by running `getwd()` in the console. Since we know the root directory, we can use **relative** paths to get any file in this `project` directory. Notice in the following chunks we're just referencing `data/` as the path.
+
+<!--
+Tufte handouts only support two levels of headings, so let's bold the inline heading and add a bit of vertical space with this LaTeX command.
+-->
+
+\vspace{5mm}
+
+**CSV.** Comma separated data files. The workhorse of data science.[^whine] You'll come to appreciate when people share data in this format, so pay it forward when you start sharing your own files.
+
+[^whine]: *"But real data scientists store data in cloud databases."* Databases are cool but most projects don't need one.
+
+```{r}
+  df_csv <- read.csv("data/confirmed_global.csv")
+```
+
+**RData.** `.RData` files are files specific to R. A really slick feature is that you can save multiple objects to one `.RData` file and load them all at once with `load()`.
+
+```{r}
+  load("data/confirmed_global.RData")
+```
+
+
+**Excel.** Notice that we're calling the function `read_excel()` with an explicit reference to its package name by typing `readxl::`. This is not required if we load the `{readxl}` package—which we do above—but I want to make it clear to you where these functions come from. 
+
+```{r}
+  df_xls <- 
+    readxl::read_excel(
+              "data/confirmed_global.xlsx",
+              sheet="myData")
+```
+
+**Stata, SAS, SPSS.** The `{haven}` package, a lesser known star in the `tidyverse`, has several functions for reading and writing data from/to other stats programs.
+
+```{r}
+  df_dta <- read_dta("data/confirmed_global.dta")
+
+  df_spss <- read_sav("data/confirmed_global.sav")
+  
+  df_sas <- read_sas("data/confirmed_global.sas7bdat")
+```
+
+**Web.** If you're lucky, you'll find the data you want online posted as a csv file. Simply use the base R `read.csv()` function to read it into R by passing a URL instead of a local file name.
+
+```{r, echo=3}
+  myUrl <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
+
+  df_url <- read.csv(myUrl)
+```
+
+The `{googlesheets4}` package, also a member of the `tidyverse`, lets you read and write from/to Google Sheets. Running `sheets_deauth()` after loading the package will turn off authentication so you can read publicly shared sheets without having to login.
+
+```{r, echo=7:8}
+# you can put the url directly into the function
+# but the printing is ugly in Tufte so I'm assigning to gsURL
+# echo=7:8 tells R not to print lines 1:5
+
+  gsURL <- "https://docs.google.com/spreadsheets/d/1ibAj_plJBjumAvr8P8_TzwWaU8gTciOeuTwVjN4cZIM/edit?usp=sharing"
+  
+  df_gs <- 
+    read_sheet(gsURL)
+```
+
+Sometimes people will make their data available via APIs—application programming interfaces. Once you read their docs about how to use their API, you can make requests via R and parse the data into a dataframe. 
+
+```{r, echo=3:12}
+# https://www.statworx.com/de/blog/making-of-a-free-api-for-covid-19-data/
+
+# Post to API
+payload <- list(code = "ALL")
+response <- 
+  httr::POST(url = "https://api.statworx.com/covid",
+             body = toJSON(payload, auto_unbox = TRUE), 
+             encode = "json")
+
+# Convert to data frame
+  content <- rawToChar(response$content)
+  df_api <- data.frame(fromJSON(content))
+```
+
+```{r scrape, fig.cap="Wikipedia table on U.S. pandemic.", fig.margin=TRUE, out.width='100%', echo=FALSE}
+  knitr::include_graphics('img/wiki.png')
+```
+
+Then there are those times where you find data on the web that you would like to bring into R, but it's not in a sharable format. One option to get the data is called web scraping, and it can be controversial. Just remember: "With great power comes great responsibility". ([tips](https://scrapinghub.com/guides/web-scraping-best-practices))
+
+```{r, echo=8:19}
+# example from https://rviews.rstudio.com/2020/03/05/covid-19-epidemiology-with-r/
+
+  wikiURL <- "https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_the_United_States"
+
+# read the page using the rvest package.
+  outbreak_webpage <- read_html(wikiURL)
+  
+# parse the web page and extract the data from the 3rd table
+  outbreak_webpage %>% 
+    html_nodes("table") %>% 
+    .[[3]] %>% 
+    html_table(fill = TRUE) %>%
+    `colnames<-`(paste0("var", seq(1:8))) %>%
+    filter(var1 == "") %>%
+    select(var2, var3) %>%
+    rename(state = var2,
+           cases = var3) %>%
+    slice(1:5) %>%
+    kable() %>%
+    kableExtra::kable_styling()
+```
+
+**Databases.** Getting data into and out of local and cloud databases requires its own workshop, but RStudio makes it as easy as possible. Read more [here](https://db.rstudio.com/).
+
+\newpage
+
+# Wranging data with the tidyverse
+
+## Sum subnational data to get national totals
+
+```{r step1, echo=1:9}
+  df_s1 <- 
+  df_csv %>%
+    select(-Lat, -Long) %>%
+    group_by(Country.Region) %>%
+    mutate_at(vars(starts_with("X")),
+              funs(sum)) %>%
+    ungroup() %>%
+    distinct(Country.Region, .keep_all = TRUE) %>%
+    select(-Province.State)
+  
+  tibble::glimpse(df_s1[, 1:5])
+```
+
+## Pivot wide to long
+
+```{r, echo=1:7}
+  df_s2 <-
+  df_s1 %>%
+    pivot_longer(cols = starts_with("X"),
+                 names_to = "date",
+                 names_prefix = "X",
+                 values_to = "cases") %>%
+    mutate(date = lubridate::mdy(date))
+
+  tibble::glimpse(df_s2)
+```
+
+## Calculate daily new cases
+
+```{r, echo=1:6}
+  df_s3 <-
+  df_s2 %>%
+    group_by(Country.Region) %>%
+    mutate(total = max(cases)) %>%
+    mutate(newCases = c(cases[1], diff(cases))) %>%
+    ungroup()
+
+  tibble::glimpse(df_s3)
+```
+
+## Identify top 20 countries in terms of cases
+
+```{r, echo=1:6}
+  top20 <-
+  df_s3 %>%
+    distinct(Country.Region, .keep_all = TRUE) %>%
+    filter(Country.Region!="France") %>%
+    arrange(desc(total)) %>%
+    slice(1:20)
+
+  tibble::glimpse(top20)
+```
+
+## Calculate rolling mean
+
+```{r, echo=1:16}
+# create a rolling version of the mean function
+  roll_mean <- rollify(mean, window=3)
+
+# calculate rolling mean
+  df_s4 <-
+  df_s3 %>%
+    filter(Country.Region %in% top20$Country.Region) %>%
+    group_by(Country.Region) %>%
+    mutate(casesRoll = roll_mean(newCases)) %>%
+    ungroup() %>%
+    filter(!is.na(casesRoll)) %>%
+    mutate(casesRollf = cut(casesRoll,
+                            breaks = c(0, 1, 10, 50, 100, 
+                                       250, 500, 1000, 
+                                       5000, Inf),
+                            right = FALSE))
+  
+  tibble::glimpse(df_s4)
+```
+
+## Create the plot!
+
+```{r}
+  p <- 
+  ggplot(df_s4, aes(x=date, 
+  # reorder sorts the y axis by total
+                      y=reorder(Country.Region, 
+                                total, 
+                                order=TRUE))) +
+    geom_tile(aes(fill=casesRollf), 
+              color="white", 
+              na.rm = TRUE) +
+    theme_bw() + theme_minimal() +
+    theme(panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank(),
+          legend.title = element_blank(),
+          plot.title = element_text(face="bold",
+                                    size=20),
+          plot.subtitle = element_text(size=15),
+          plot.title.position = "plot",
+          plot.caption = element_text(size=10),
+          legend.text = element_text(size=11),
+          legend.justification = "top",
+          legend.position=c(1.12,1),
+          legend.key.width = unit(0.4,"line"),
+          plot.margin=unit(c(0.25,2.5,0.25,0.25),"cm"),
+          axis.text = element_text(size=12)) +
+    scale_x_date(breaks = as.Date(c("2020-02-14",
+                            "2020-03-05",
+                            "2020-03-25",
+                            "2020-04-14")),
+                 date_labels = "%d %b") +
+    scale_fill_manual(values=
+                        c("#e4e4e4", "#ffeed2", 
+                          "#ffda64", "#faab19", 
+                          "#d2700d", "#d56666", 
+                          "#9a1200", "#5b0600", 
+                          "#000000"),
+                      guide = guide_legend(reverse = TRUE),
+                      labels=c("No cases", 
+                               "1 to 10",
+                               "11 to 50", 
+                               "51 to 100",
+                               "101 to 250", 
+                               "251 to 500",
+                               "501 to 1,000", 
+                               "1,001 to 5,000", 
+                               "> 5,000")) +
+    labs(title = "Where are the most new coronavirus cases?",
+         subtitle = "New confirmed cases, three-day rolling average",
+         caption = "Note: Due to data revisions from Johns Hopkins University, a three-day\naverage for France ncannot be meaningfully calculated",
+         x="",
+         y="")
+  
+  ggsave("img/bbc.png", p, height=7, width=6)
+```
+
+I struggled to get the plot to print correctly in the Tufte document, so I save it to a file and print that file.
+
+```{r final, fig.cap="Our goal.", fig.margin=FALSE, out.width='100%', echo=FALSE, fig.fullwidth = TRUE}
+  knitr::include_graphics('img/bbc.png')
+```

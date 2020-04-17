@@ -9,14 +9,14 @@ output:
 
 Here's our schedule. I'm making all of this up as I go along, so the order and content might change from week to week. I'm drawing inspiration from a 2017 version of this workshop developed with Dr. Amy Finnegan (IntraHealth) and from loads of great online learning materials, such as Grolemund and Wickham's [*R for Data Science*](https://r4ds.had.co.nz/). My goal is to give you a glimpse of what you can do in R and to give you enough skills to know how to take the next step in your learning after the workshop.  
 
-1. Getting started with R and RStudio
-2. Getting to know `{ggplot2}`
-3. Importing and transforming data
-4. Exploratory data analysis
-5. Interactive and animated plots
-6. Relational data
-7. Text mining
-8. Flexdashboards (and shiny apps)
-9. Tidymodels
-10. Reproducible workflows
+1. Getting started with R and RStudio (April 3)
+2. Getting to know `{ggplot2}` (April 10)
+3. Importing and transforming data (April 17)
+4. Exploratory data analysis (April 24)
+5. Interactive and animated plots (May 1)
+6. Mapping (May 8)
+7. Text mining (May 15)
+8. Flexdashboards (May 22)
+9. Tidymodels (May 29)
+10. Reproducible workflows (June 5)
 
