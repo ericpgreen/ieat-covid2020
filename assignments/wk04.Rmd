@@ -1,0 +1,442 @@
+---
+title             : "Exploratory data analysis in R"
+shorttitle        : "Exploratory data analysis"
+
+author: 
+  - name          : "Your name here"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Postal address"
+    email         : "my@email.com"
+  - name          : "Eric Green"
+    affiliation   : "1,2"
+
+affiliation:
+  - id            : "1"
+    institution   : "Duke University"
+  - id            : "2"
+    institution   : "Hogwarts School of Witchcraft and Wizardry"
+
+authornote: |
+  You, Fancy Department, Duke University, Durham, NC, USA.
+  
+  Eric Green, Duke Global Health Institute, Duke University and Hogwarts School of Witchcraft and Wizardry, Durham, NC, USA.
+
+  The authors declare no conflicts of interest or sources of funding for this work.
+
+abstract: |
+  This is our abstract. 
+  
+keywords          : "apple, mobility, coronavirus, social distancing"
+wordcount         : "X"
+
+bibliography      : ["r-references.bib","wk04.bib"]
+
+floatsintext      : yes
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : yes
+mask              : no
+draft             : no
+
+documentclass     : "apa6"
+classoption       : "man"
+output            : papaja::apa6_pdf
+---
+
+```{r setup, include = FALSE}
+library("papaja") # tinytex::install_tinytex()
+```
+
+# Introduction
+
+In *R for Data Science*, @wickham:2017 describe [exploratory data analysis](https://r4ds.had.co.nz/exploratory-data-analysis.html#introduction-3) as "a state of mind". In this session we'll explore how to live this state of mind by poking, summarizing, and plotting our data. Today's inspiration comes from Kieran Healy whose {[`covdata`](https://kjhealy.github.io/covdata/)} package makes it easy to plot recently released COVID-era mobility data from Apple 'Maps' users [@R-covdata]. We'll also learn a new output format courtesy of the {`papaja`} package [@R-papaja].
+
+```{r chunk1, fig.cap="@kjhealy", out.width='100%'}
+  knitr::include_graphics("img/wk04-inspiration.png")
+```
+
+
+# Methods
+
+<!-- I'm too lazy to make these links proper bibtex citations -->
+
+The main data for today's session comes from [Apple](https://www.apple.com/covid19/mobility). The company says it released this data [to aid COVID-19 efforts](https://www.apple.com/newsroom/2020/04/apple-makes-mobility-data-available-to-aid-covid-19-efforts/). Here's how Apple describes the data:
+
+> The CSV file and charts on this site show a relative volume of directions requests per country/region or city compared to a baseline volume on January 13th, 2020. We define our day as midnight-to-midnight, Pacific time. Cities represent usage in greater metropolitan areas and are stably defined during this period. In many countries/regions and cities, relative volume has increased since January 13th, consistent with normal, seasonal usage of Apple Maps. Day of week effects are important to normalize as you use this data. Data that is sent from users’ devices to the Maps service is associated with random, rotating identifiers so Apple doesn’t have a profile of your movements and searches. Apple Maps has no demographic information about our users, so we can’t make any statements about the representativeness of our usage against the overall population.
+
+<!-- Run sessionInfo() to see helpful details like R version -->
+
+We will use R [version 3.6.0; @R-base] to explore this data.
+
+# Results
+
+First we load the packages and data.
+
+```{r chunk2}
+  library(tidyverse)
+  library(lubridate)
+
+# mobility data ---------------------------------------------------------------
+# https://www.apple.com/covid19/mobility
+  apple <- read.csv("",
+                    stringsAsFactors = FALSE)
+  
+# city names ------------------------------------------------------------------  
+# https://simplemaps.com/data/us-cities
+  uscities <- read.csv("data/uscities.csv", 
+                       stringsAsFactors = FALSE)
+  
+# covid data ------------------------------------------------------------------
+# https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series
+  
+  confirmed <- read.csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv", stringsAsFactors = FALSE)
+  
+  # deaths <- read.csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_US.csv", stringsAsFactors = FALSE)
+  
+# county to city --------------------------------------------------------------
+# https://www.census.gov/geographies/reference-files/time-series/demo/metro-micro/delineation-files.html
+  delineation <- read.csv("data/msa.csv", stringsAsFactors = FALSE)
+```
+
+Open up these data frames in the Viewer by clicking on the object name in the Environment. Try running `str(apple)` and `tibble::glimpse(apple)` in the console.
+
+## Wide to long
+
+As in previous weeks, we need to transform our data from this wide format that is great for data entry to a long format that is necessary for plotting. Try filling in the blanks with the right details.
+
+```{r chunk3}
+  applePie <-  # save the pipe result to applePie
+  apple %>%    # start with the data
+  # transform the data from wide to long
+    pivot_longer(cols = _________(""), 
+                 names_to = "date",
+                 names_prefix = "X",
+                 values_to = "index") %>%
+  # use a dplyr verb to create two new variables
+    _______(date = mdy(date),
+           change = (index-100)) ##_________()
+```
+
+## Summarize
+
+There are 101 ways to summarize a dataframe. Here's a chatty way of counting the observations of `geo_type` by `transportation_type` and then calculating the percentages by group and overall. It's important to always check your N's.
+
+```{r chunk4, results='hide'}
+  applePie %>%
+  # count obs by geo_type and transportation_type
+    ________(geo_type, transportation_type) %>%
+    count() %>%
+  # regroup to get % by geo_type
+    ________(geo_type) %>%
+    mutate(geo_p = (n/sum(n)*100)) %>%
+  # regroup to get % by transportation_type
+    ________(transportation_type) %>%
+    mutate(transport_p = (n/sum(n)*100)) %>%
+  # ungroup to get overall %
+    ungroup() %>%
+    mutate(p = (n/sum(n)*100))
+```
+
+## Plot
+
+The main variable of interest in change in mobility. How does change vary by transportation type and region?
+
+```{r chunk5, fig.show = 'hide', eval=FALSE}
+  applePie %>%
+    ggplot(., aes(x=________,
+                  y=________, 
+                  fill = ________)) + 
+    geom_boxplot() +
+    facet_wrap(~ ________)
+```
+
+That's too many panels. Let's limit to US cities. Give it a shot.
+
+```{r chunk6}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+It's not possible with the data we have. There's no column that identifies a region as a US city or a foreign city. So let's merge in a list of US city names.
+
+```{r chunk7, fig.show = 'hide'}
+  applePie %>%
+  # select function is nested inside inner_join
+  # select limits the columns we want from uscities
+  # inner_join only keeps records in applePie that also appear in uscities
+  
+    inner_join(select(uscities, city, population, density),
+               by=c("region" = "city")) %>%
+    ggplot(., aes(x=transportation_type,
+                         y=change, 
+                         fill=transportation_type)) + 
+    geom_boxplot() +
+    facet_wrap(~region)
+```
+
+Whoops. Looks like there some foreign cities share a name with US cities. 
+
+```{r chunk8, results='hide'}
+  "Vienna" %in% uscities$city
+```
+
+So what we need to do is limit the list of US cities to just the big ones. Apple only released data for large cities, so limiting to populations of 300,000 should do it.
+
+```{r chunk9, fig.show = 'hide'}
+  applePie %>%
+  # filter is nested in select which is nested in inner_join
+    inner_join(select(filter(uscities, population > 300000),
+                      city, population, density),
+               by=c("region" = "city")) %>%
+    ggplot(., aes(x=transportation_type,
+                         y=change, 
+                         fill=transportation_type)) + 
+    geom_boxplot() +
+    facet_wrap(~region)
+```
+
+This is OK, but it lumps all of the data together from January through April. Let's look just at data from April to see if we notice a big dip in mobility.
+
+```{r chunk10, fig.show = 'hide'}
+  applePie %>%
+    filter(date>="2020-04-01") %>%
+    inner_join(select(filter(uscities, population > 300000),
+                      city, population, density),
+               by=c("region" = "city")) %>%
+    ggplot(., aes(x=transportation_type,
+                         y=change, 
+                         fill=transportation_type)) + 
+    geom_boxplot() +
+    facet_wrap(~region) +
+    ylim(-100, 60)
+```
+
+Yep, big time. It might be interesting to add back the rest of the data and plot by month.
+
+```{r chunk11, fig.show = 'hide'}
+  applePie %>%
+  # use lubridate::month() to identify the month for faceting
+    mutate(month = month(date)) %>%
+  # lubridate::wday gives us the day of the week for each date
+    mutate(weekday = wday(date, label = TRUE)) %>%
+  # so we can exclude weekends if we want
+    filter(weekday != "Sat" & weekday != "Sun") %>%
+  # run the same inner join
+    inner_join(select(filter(uscities, population > 300000),
+                      city, population, density),
+               by=c("region" = "city")) %>%
+    ggplot(., aes(x=transportation_type,
+                         y=change, 
+                         fill=transportation_type)) + 
+    geom_boxplot() +
+  # now we're using facet_grid (not _wrap) and giving it two dimensions
+    facet_grid(month~region)
+```
+
+## Reproduce the original Apple plot
+
+Apple created this plot with the mobility data:.
+
+```{r chunk12, fig.cap="Mobility trends. Source: https://www.apple.com/covid19/mobility"}
+  knitr::include_graphics("img/apple.png")
+```
+
+Let's try to reproduce Apple's plot. We need to limit the dataset to four countries and then plot by group.
+
+```{r chunk13, fig.cap="Reproducing the original."}
+# identify countries to keep
+  keep <- c("Germany", "United States", "Italy", "UK")
+  
+  applePie %>%
+    ________(region %in% keep) %>%
+    ________(________) %>% 
+  # relabel USA
+    mutate(region = ifelse(region=="United States", "USA", region)) %>%
+  # a trick to label just the ends of the lines
+    mutate(label = ifelse(date==max(date), region, "")) %>%
+  # plot
+    ggplot(., aes(x=date, y=change, group=region, color=region)) +
+      geom_line() +
+    
+    # time to fiddle to get it to look just right
+      scale_y_continuous(breaks = c(-60, -20, 20, 60),
+                         limits = c(-100, 80)) +
+      scale_color_manual(values=c("#5756d7", "#59c7f9",
+                                  "#35c658", "#aeadb2")) +
+      guides(color = FALSE) +
+      ggrepel::geom_text_repel(aes(label = label),
+                               nudge_x = 2,
+                               na.rm = TRUE) +
+      labs(title="Weekday Mobility Trends (Driving)",
+           subtitle = "Percent change in routing requests from January 13, 2020.",
+           caption = "Data: Apple, https://www.apple.com/covid19/mobility",
+           x="",
+           y="") +
+      geom_hline(yintercept=0, color="#5c5b57", size=.4) +
+      theme_minimal() +
+      theme(plot.title.position = "plot",
+            plot.title = element_text(face="bold", size=20, 
+                                      color="#5c5b57"),
+            plot.subtitle = element_text(size=13, color="#5c5b57"),
+            plot.caption = element_text(size=9, color="#5c5b57"),
+            panel.grid.major.x = element_blank(), 
+            panel.grid.minor.y = element_blank(),
+            panel.grid.minor.x = element_blank())
+```
+
+## Try something new
+
+Let's finish by plotting major US cities and going to far too much work to add a vertical line that shows the number of cases. The first thing we need to do is prep the case data.
+
+```{r chunk14}
+# cases wide to long
+  confirmed_long <-
+  confirmed %>%
+    pivot_longer(cols = starts_with("X"), 
+                 names_to = "date",
+                 names_prefix = "X",
+                 values_to = "cases") %>%
+    rename("region" = "Admin2") %>%
+    mutate(date = mdy(date)) %>%
+    select(region, date, cases, FIPS)
+
+# turning off deaths since we don't need it
+
+# # deaths wide to long
+#   deaths_long <-
+#   deaths %>%
+#     pivot_longer(cols = starts_with("X"), 
+#                  names_to = "date",
+#                  names_prefix = "X",
+#                  values_to = "deaths") %>%
+#     rename("region" = "Admin2") %>%
+#     mutate(date = mdy(date)) %>%
+#     select(region, date, deaths, FIPS)
+#   
+# # combine cases and deaths
+#   covid <- 
+#     confirmed_long %>%
+#     bind_rows(deaths_long)
+
+  covid <- confirmed_long
+```
+
+The hitch is that the case data are reported by county, and we want city. I could not find city-level data, so we're going to use census delineation files to aggregate county data up to "core based statistical areas". Take a peek and you'll realize that we're overshooting proper city boundaries.
+
+```{r chunk15, results='hide'}
+  delineation %>% 
+    filter(region=="Atlanta") %>% 
+    select(region, CBSA.Title, County.County.Equivalent)
+  
+```
+
+
+```{r chunk16, warning=FALSE, message=FALSE}
+# aggregate counties to cities
+  covid_apple <- 
+    delineation %>%
+    select(region, FIPS) %>%
+    left_join(select(covid, -region), by="FIPS") %>%
+    mutate(cases = ifelse(is.na(cases), 0, cases)
+           #,deaths = ifelse(is.na(deaths), 0, deaths)
+           ) %>%
+  # this is the step that sums counties by city and date
+    group_by(region, date) %>%
+    mutate_at(vars(cases),
+              funs(sum)) %>%
+    # mutate_at(vars(deaths),
+    #           funs(sum)) %>%
+    distinct(region, date, .keep_all = TRUE) 
+```
+
+The last step before plotting is to prep the dataset one last time.
+
+```{r chunk17}
+  applePie_cov <- 
+  applePie %>%
+    filter(transportation_type=="driving") %>%
+    inner_join(select(filter(uscities, population > 300000),
+                      city, population, density),
+               by=c("region" = "city")) %>%
+    left_join(covid_apple, by=c("region", "date")) %>%
+    mutate(cases = ifelse(date==ymd("2020-03-15"), 
+                          paste0("Cases: ", cases), "")) %>%
+  # this creates an indicator of whether change is pos or neg
+    mutate(pos = change>=0)
+```
+
+Now we're ready to plot. 
+
+```{r chunk18, warning=FALSE, message=FALSE, fig.cap="Our goal.", fig.width=7, fig.height=5}
+    ggplot(applePie_cov, aes(x=date, y=change, 
+                             fill=pos, color=pos)) + 
+      geom_col() +
+      scale_fill_manual(values=c("#6f518c", "#e8ba15")) +
+      scale_color_manual(values=c("#6f518c", "#e8ba15")) +
+      facet_wrap(~region, ncol = 3) +
+      ylim(-100,60) +
+      geom_vline(xintercept = ymd("2020-03-15"), linetype="dashed") +
+      # geom_vline(data=applePie_cov20, aes(xintercept = date),
+      #            linetype="dashed") +
+      geom_text(data=applePie_cov,
+                aes(x=ymd("2020-03-15"),
+                    y=50,
+                    label = cases),
+                hjust = 0, 
+                size=3,
+                color="#5c5b57") +
+      geom_hline(yintercept=0, color="#5c5b57", size=1) +
+      labs(title="Weekday Mobility Trends (Driving)",
+           subtitle = "Percent change in routing requests from January 13, 2020.",
+           caption = "Data: Apple, https://www.apple.com/covid19/mobility",
+           x="",
+           y="") +
+      guides(color = FALSE, fill = FALSE) +
+      theme_minimal() +
+      theme(plot.title.position = "plot",
+            plot.title = element_text(face="bold", size=20, 
+                                      color="#5c5b57"),
+            plot.subtitle = element_text(size=13, color="#5c5b57"),
+            plot.caption = element_text(size=9, color="#5c5b57"))
+      
+```
+
+
+
+
+
+
+
+
+# Discussion
+
+Class dismissed.
+
+\newpage
+
+# References
+```{r create_r-references}
+r_refs(file = "r-references.bib")
+```
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+<div id="refs" custom-style="Bibliography"></div>
+\endgroup

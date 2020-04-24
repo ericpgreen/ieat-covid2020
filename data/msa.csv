@@ -1,0 +1,113 @@
+region,CBSA Code,Metropolitan Division Code,CSA Code,CBSA Title,Metropolitan/Micropolitan Statistical Area,Metropolitan Division Title,CSA Title,County/County Equivalent,State Name,FIPS State Code,FIPS County Code,Central/Outlying County,FIPS
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Barrow County,Georgia,13,013,Outlying,13013
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Bartow County,Georgia,13,015,Outlying,13015
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Butts County,Georgia,13,035,Outlying,13035
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Carroll County,Georgia,13,045,Outlying,13045
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Cherokee County,Georgia,13,057,Central,13057
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Clayton County,Georgia,13,063,Central,13063
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Cobb County,Georgia,13,067,Central,13067
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Coweta County,Georgia,13,077,Central,13077
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Dawson County,Georgia,13,085,Outlying,13085
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",DeKalb County,Georgia,13,089,Central,13089
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Douglas County,Georgia,13,097,Central,13097
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Fayette County,Georgia,13,113,Central,13113
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Forsyth County,Georgia,13,117,Central,13117
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Fulton County,Georgia,13,121,Central,13121
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Gwinnett County,Georgia,13,135,Central,13135
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Haralson County,Georgia,13,143,Outlying,13143
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Heard County,Georgia,13,149,Outlying,13149
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Henry County,Georgia,13,151,Central,13151
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Jasper County,Georgia,13,159,Outlying,13159
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Lamar County,Georgia,13,171,Outlying,13171
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Meriwether County,Georgia,13,199,Outlying,13199
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Morgan County,Georgia,13,211,Outlying,13211
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Newton County,Georgia,13,217,Central,13217
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Paulding County,Georgia,13,223,Central,13223
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Pickens County,Georgia,13,227,Outlying,13227
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Pike County,Georgia,13,231,Outlying,13231
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Rockdale County,Georgia,13,247,Central,13247
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Spalding County,Georgia,13,255,Central,13255
+Atlanta,12060,,122,"Atlanta-Sandy Springs-Alpharetta, GA",Metropolitan Statistical Area,,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL",Walton County,Georgia,13,297,Central,13297
+Baltimore,12580,,548,"Baltimore-Columbia-Towson, MD",Metropolitan Statistical Area,,"Washington-Baltimore-Arlington, DC-MD-VA-WV-PA",Anne Arundel County,Maryland,24,003,Central,24003
+Baltimore,12580,,548,"Baltimore-Columbia-Towson, MD",Metropolitan Statistical Area,,"Washington-Baltimore-Arlington, DC-MD-VA-WV-PA",Baltimore County,Maryland,24,005,Central,24005
+Baltimore,12580,,548,"Baltimore-Columbia-Towson, MD",Metropolitan Statistical Area,,"Washington-Baltimore-Arlington, DC-MD-VA-WV-PA",Carroll County,Maryland,24,013,Outlying,24013
+Baltimore,12580,,548,"Baltimore-Columbia-Towson, MD",Metropolitan Statistical Area,,"Washington-Baltimore-Arlington, DC-MD-VA-WV-PA",Harford County,Maryland,24,025,Outlying,24025
+Baltimore,12580,,548,"Baltimore-Columbia-Towson, MD",Metropolitan Statistical Area,,"Washington-Baltimore-Arlington, DC-MD-VA-WV-PA",Howard County,Maryland,24,027,Central,24027
+Baltimore,12580,,548,"Baltimore-Columbia-Towson, MD",Metropolitan Statistical Area,,"Washington-Baltimore-Arlington, DC-MD-VA-WV-PA",Queen Anne's County,Maryland,24,035,Central,24035
+Baltimore,12580,,548,"Baltimore-Columbia-Towson, MD",Metropolitan Statistical Area,,"Washington-Baltimore-Arlington, DC-MD-VA-WV-PA",Baltimore city,Maryland,24,510,Central,24510
+Boston,14460,14454,148,"Boston-Cambridge-Newton, MA-NH",Metropolitan Statistical Area,"Boston, MA","Boston-Worcester-Providence, MA-RI-NH-CT",Norfolk County,Massachusetts,25,021,Central,25021
+Boston,14460,14454,148,"Boston-Cambridge-Newton, MA-NH",Metropolitan Statistical Area,"Boston, MA","Boston-Worcester-Providence, MA-RI-NH-CT",Plymouth County,Massachusetts,25,023,Central,25023
+Boston,14460,14454,148,"Boston-Cambridge-Newton, MA-NH",Metropolitan Statistical Area,"Boston, MA","Boston-Worcester-Providence, MA-RI-NH-CT",Suffolk County,Massachusetts,25,025,Central,25025
+Boston,14460,15764,148,"Boston-Cambridge-Newton, MA-NH",Metropolitan Statistical Area,"Cambridge-Newton-Framingham, MA","Boston-Worcester-Providence, MA-RI-NH-CT",Essex County,Massachusetts,25,009,Central,25009
+Boston,14460,15764,148,"Boston-Cambridge-Newton, MA-NH",Metropolitan Statistical Area,"Cambridge-Newton-Framingham, MA","Boston-Worcester-Providence, MA-RI-NH-CT",Middlesex County,Massachusetts,25,017,Central,25017
+Boston,14460,40484,148,"Boston-Cambridge-Newton, MA-NH",Metropolitan Statistical Area,"Rockingham County-Strafford County, NH","Boston-Worcester-Providence, MA-RI-NH-CT",Rockingham County,New Hampshire,33,015,Central,33015
+Boston,14460,40484,148,"Boston-Cambridge-Newton, MA-NH",Metropolitan Statistical Area,"Rockingham County-Strafford County, NH","Boston-Worcester-Providence, MA-RI-NH-CT",Strafford County,New Hampshire,33,017,Outlying,33017
+Chicago,16980,16984,176,"Chicago-Naperville-Elgin, IL-IN-WI",Metropolitan Statistical Area,"Chicago-Naperville-Evanston, IL","Chicago-Naperville, IL-IN-WI",Cook County,Illinois,17,031,Central,17031
+Chicago,16980,16984,176,"Chicago-Naperville-Elgin, IL-IN-WI",Metropolitan Statistical Area,"Chicago-Naperville-Evanston, IL","Chicago-Naperville, IL-IN-WI",DuPage County,Illinois,17,043,Central,17043
+Chicago,16980,16984,176,"Chicago-Naperville-Elgin, IL-IN-WI",Metropolitan Statistical Area,"Chicago-Naperville-Evanston, IL","Chicago-Naperville, IL-IN-WI",Grundy County,Illinois,17,063,Outlying,17063
+Chicago,16980,16984,176,"Chicago-Naperville-Elgin, IL-IN-WI",Metropolitan Statistical Area,"Chicago-Naperville-Evanston, IL","Chicago-Naperville, IL-IN-WI",McHenry County,Illinois,17,111,Central,17111
+Chicago,16980,16984,176,"Chicago-Naperville-Elgin, IL-IN-WI",Metropolitan Statistical Area,"Chicago-Naperville-Evanston, IL","Chicago-Naperville, IL-IN-WI",Will County,Illinois,17,197,Central,17197
+Chicago,16980,20994,176,"Chicago-Naperville-Elgin, IL-IN-WI",Metropolitan Statistical Area,"Elgin, IL","Chicago-Naperville, IL-IN-WI",DeKalb County,Illinois,17,037,Outlying,17037
+Chicago,16980,20994,176,"Chicago-Naperville-Elgin, IL-IN-WI",Metropolitan Statistical Area,"Elgin, IL","Chicago-Naperville, IL-IN-WI",Kane County,Illinois,17,089,Central,17089
+Chicago,16980,20994,176,"Chicago-Naperville-Elgin, IL-IN-WI",Metropolitan Statistical Area,"Elgin, IL","Chicago-Naperville, IL-IN-WI",Kendall County,Illinois,17,093,Central,17093
+Chicago,16980,23844,176,"Chicago-Naperville-Elgin, IL-IN-WI",Metropolitan Statistical Area,"Gary, IN","Chicago-Naperville, IL-IN-WI",Jasper County,Indiana,18,073,Outlying,18073
+Chicago,16980,23844,176,"Chicago-Naperville-Elgin, IL-IN-WI",Metropolitan Statistical Area,"Gary, IN","Chicago-Naperville, IL-IN-WI",Lake County,Indiana,18,089,Central,18089
+Chicago,16980,23844,176,"Chicago-Naperville-Elgin, IL-IN-WI",Metropolitan Statistical Area,"Gary, IN","Chicago-Naperville, IL-IN-WI",Newton County,Indiana,18,111,Outlying,18111
+Chicago,16980,23844,176,"Chicago-Naperville-Elgin, IL-IN-WI",Metropolitan Statistical Area,"Gary, IN","Chicago-Naperville, IL-IN-WI",Porter County,Indiana,18,127,Central,18127
+Chicago,16980,29404,176,"Chicago-Naperville-Elgin, IL-IN-WI",Metropolitan Statistical Area,"Lake County-Kenosha County, IL-WI","Chicago-Naperville, IL-IN-WI",Lake County,Illinois,17,097,Central,17097
+Chicago,16980,29404,176,"Chicago-Naperville-Elgin, IL-IN-WI",Metropolitan Statistical Area,"Lake County-Kenosha County, IL-WI","Chicago-Naperville, IL-IN-WI",Kenosha County,Wisconsin,55,059,Outlying,55059
+Dallas,19100,19124,206,"Dallas-Fort Worth-Arlington, TX",Metropolitan Statistical Area,"Dallas-Plano-Irving, TX","Dallas-Fort Worth, TX-OK",Collin County,Texas,48,085,Central,48085
+Dallas,19100,19124,206,"Dallas-Fort Worth-Arlington, TX",Metropolitan Statistical Area,"Dallas-Plano-Irving, TX","Dallas-Fort Worth, TX-OK",Dallas County,Texas,48,113,Central,48113
+Dallas,19100,19124,206,"Dallas-Fort Worth-Arlington, TX",Metropolitan Statistical Area,"Dallas-Plano-Irving, TX","Dallas-Fort Worth, TX-OK",Denton County,Texas,48,121,Outlying,48121
+Dallas,19100,19124,206,"Dallas-Fort Worth-Arlington, TX",Metropolitan Statistical Area,"Dallas-Plano-Irving, TX","Dallas-Fort Worth, TX-OK",Ellis County,Texas,48,139,Central,48139
+Dallas,19100,19124,206,"Dallas-Fort Worth-Arlington, TX",Metropolitan Statistical Area,"Dallas-Plano-Irving, TX","Dallas-Fort Worth, TX-OK",Hunt County,Texas,48,231,Outlying,48231
+Dallas,19100,19124,206,"Dallas-Fort Worth-Arlington, TX",Metropolitan Statistical Area,"Dallas-Plano-Irving, TX","Dallas-Fort Worth, TX-OK",Kaufman County,Texas,48,257,Outlying,48257
+Dallas,19100,19124,206,"Dallas-Fort Worth-Arlington, TX",Metropolitan Statistical Area,"Dallas-Plano-Irving, TX","Dallas-Fort Worth, TX-OK",Rockwall County,Texas,48,397,Central,48397
+Dallas,19100,23104,206,"Dallas-Fort Worth-Arlington, TX",Metropolitan Statistical Area,"Fort Worth-Arlington-Grapevine, TX","Dallas-Fort Worth, TX-OK",Johnson County,Texas,48,251,Central,48251
+Dallas,19100,23104,206,"Dallas-Fort Worth-Arlington, TX",Metropolitan Statistical Area,"Fort Worth-Arlington-Grapevine, TX","Dallas-Fort Worth, TX-OK",Parker County,Texas,48,367,Outlying,48367
+Dallas,19100,23104,206,"Dallas-Fort Worth-Arlington, TX",Metropolitan Statistical Area,"Fort Worth-Arlington-Grapevine, TX","Dallas-Fort Worth, TX-OK",Tarrant County,Texas,48,439,Central,48439
+Dallas,19100,23104,206,"Dallas-Fort Worth-Arlington, TX",Metropolitan Statistical Area,"Fort Worth-Arlington-Grapevine, TX","Dallas-Fort Worth, TX-OK",Wise County,Texas,48,497,Outlying,48497
+Denver,19740,,216,"Denver-Aurora-Lakewood, CO",Metropolitan Statistical Area,,"Denver-Aurora, CO",Adams County,Colorado,8,001,Central,8001
+Denver,19740,,216,"Denver-Aurora-Lakewood, CO",Metropolitan Statistical Area,,"Denver-Aurora, CO",Arapahoe County,Colorado,8,005,Central,8005
+Denver,19740,,216,"Denver-Aurora-Lakewood, CO",Metropolitan Statistical Area,,"Denver-Aurora, CO",Broomfield County,Colorado,8,014,Central,8014
+Denver,19740,,216,"Denver-Aurora-Lakewood, CO",Metropolitan Statistical Area,,"Denver-Aurora, CO",Clear Creek County,Colorado,8,019,Outlying,8019
+Denver,19740,,216,"Denver-Aurora-Lakewood, CO",Metropolitan Statistical Area,,"Denver-Aurora, CO",Denver County,Colorado,8,031,Central,8031
+Denver,19740,,216,"Denver-Aurora-Lakewood, CO",Metropolitan Statistical Area,,"Denver-Aurora, CO",Douglas County,Colorado,8,035,Central,8035
+Denver,19740,,216,"Denver-Aurora-Lakewood, CO",Metropolitan Statistical Area,,"Denver-Aurora, CO",Elbert County,Colorado,8,039,Outlying,8039
+Denver,19740,,216,"Denver-Aurora-Lakewood, CO",Metropolitan Statistical Area,,"Denver-Aurora, CO",Gilpin County,Colorado,8,047,Outlying,8047
+Denver,19740,,216,"Denver-Aurora-Lakewood, CO",Metropolitan Statistical Area,,"Denver-Aurora, CO",Jefferson County,Colorado,8,059,Central,8059
+Denver,19740,,216,"Denver-Aurora-Lakewood, CO",Metropolitan Statistical Area,,"Denver-Aurora, CO",Park County,Colorado,8,093,Outlying,8093
+Detroit,19820,19804,220,"Detroit-Warren-Dearborn, MI",Metropolitan Statistical Area,"Detroit-Dearborn-Livonia, MI","Detroit-Warren-Ann Arbor, MI",Wayne County,Michigan,26,163,Central,26163
+Detroit,19820,47664,220,"Detroit-Warren-Dearborn, MI",Metropolitan Statistical Area,"Warren-Troy-Farmington Hills, MI","Detroit-Warren-Ann Arbor, MI",Lapeer County,Michigan,26,087,Outlying,26087
+Detroit,19820,47664,220,"Detroit-Warren-Dearborn, MI",Metropolitan Statistical Area,"Warren-Troy-Farmington Hills, MI","Detroit-Warren-Ann Arbor, MI",Livingston County,Michigan,26,093,Outlying,26093
+Detroit,19820,47664,220,"Detroit-Warren-Dearborn, MI",Metropolitan Statistical Area,"Warren-Troy-Farmington Hills, MI","Detroit-Warren-Ann Arbor, MI",Macomb County,Michigan,26,099,Central,26099
+Detroit,19820,47664,220,"Detroit-Warren-Dearborn, MI",Metropolitan Statistical Area,"Warren-Troy-Farmington Hills, MI","Detroit-Warren-Ann Arbor, MI",Oakland County,Michigan,26,125,Central,26125
+Detroit,19820,47664,220,"Detroit-Warren-Dearborn, MI",Metropolitan Statistical Area,"Warren-Troy-Farmington Hills, MI","Detroit-Warren-Ann Arbor, MI",St. Clair County,Michigan,26,147,Outlying,26147
+Houston,26420,,288,"Houston-The Woodlands-Sugar Land, TX",Metropolitan Statistical Area,,"Houston-The Woodlands, TX",Austin County,Texas,48,015,Outlying,48015
+Houston,26420,,288,"Houston-The Woodlands-Sugar Land, TX",Metropolitan Statistical Area,,"Houston-The Woodlands, TX",Brazoria County,Texas,48,039,Central,48039
+Houston,26420,,288,"Houston-The Woodlands-Sugar Land, TX",Metropolitan Statistical Area,,"Houston-The Woodlands, TX",Chambers County,Texas,48,071,Central,48071
+Houston,26420,,288,"Houston-The Woodlands-Sugar Land, TX",Metropolitan Statistical Area,,"Houston-The Woodlands, TX",Fort Bend County,Texas,48,157,Central,48157
+Houston,26420,,288,"Houston-The Woodlands-Sugar Land, TX",Metropolitan Statistical Area,,"Houston-The Woodlands, TX",Galveston County,Texas,48,167,Central,48167
+Houston,26420,,288,"Houston-The Woodlands-Sugar Land, TX",Metropolitan Statistical Area,,"Houston-The Woodlands, TX",Harris County,Texas,48,201,Central,48201
+Houston,26420,,288,"Houston-The Woodlands-Sugar Land, TX",Metropolitan Statistical Area,,"Houston-The Woodlands, TX",Liberty County,Texas,48,291,Outlying,48291
+Houston,26420,,288,"Houston-The Woodlands-Sugar Land, TX",Metropolitan Statistical Area,,"Houston-The Woodlands, TX",Montgomery County,Texas,48,339,Outlying,48339
+Houston,26420,,288,"Houston-The Woodlands-Sugar Land, TX",Metropolitan Statistical Area,,"Houston-The Woodlands, TX",Waller County,Texas,48,473,Outlying,48473
+Los Angeles,31080,11244,348,"Los Angeles-Long Beach-Anaheim, CA",Metropolitan Statistical Area,"Anaheim-Santa Ana-Irvine, CA","Los Angeles-Long Beach, CA",Orange County,California,6,059,Central,6059
+Los Angeles,31080,31084,348,"Los Angeles-Long Beach-Anaheim, CA",Metropolitan Statistical Area,"Los Angeles-Long Beach-Glendale, CA","Los Angeles-Long Beach, CA",Los Angeles County,California,6,037,Central,6037
+Miami,33100,22744,370,"Miami-Fort Lauderdale-Pompano Beach, FL",Metropolitan Statistical Area,"Fort Lauderdale-Pompano Beach-Sunrise, FL","Miami-Port St. Lucie-Fort Lauderdale, FL",Broward County,Florida,12,011,Central,12011
+Miami,33100,33124,370,"Miami-Fort Lauderdale-Pompano Beach, FL",Metropolitan Statistical Area,"Miami-Miami Beach-Kendall, FL","Miami-Port St. Lucie-Fort Lauderdale, FL",Miami-Dade County,Florida,12,086,Central,12086
+Miami,33100,48424,370,"Miami-Fort Lauderdale-Pompano Beach, FL",Metropolitan Statistical Area,"West Palm Beach-Boca Raton-Boynton Beach, FL","Miami-Port St. Lucie-Fort Lauderdale, FL",Palm Beach County,Florida,12,099,Central,12099
+Philadelphia,37980,15804,428,"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",Metropolitan Statistical Area,"Camden, NJ","Philadelphia-Reading-Camden, PA-NJ-DE-MD",Burlington County,New Jersey,34,005,Central,34005
+Philadelphia,37980,15804,428,"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",Metropolitan Statistical Area,"Camden, NJ","Philadelphia-Reading-Camden, PA-NJ-DE-MD",Camden County,New Jersey,34,007,Central,34007
+Philadelphia,37980,15804,428,"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",Metropolitan Statistical Area,"Camden, NJ","Philadelphia-Reading-Camden, PA-NJ-DE-MD",Gloucester County,New Jersey,34,015,Central,34015
+Philadelphia,37980,33874,428,"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",Metropolitan Statistical Area,"Montgomery County-Bucks County-Chester County, PA","Philadelphia-Reading-Camden, PA-NJ-DE-MD",Bucks County,Pennsylvania,42,017,Central,42017
+Philadelphia,37980,33874,428,"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",Metropolitan Statistical Area,"Montgomery County-Bucks County-Chester County, PA","Philadelphia-Reading-Camden, PA-NJ-DE-MD",Chester County,Pennsylvania,42,029,Central,42029
+Philadelphia,37980,33874,428,"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",Metropolitan Statistical Area,"Montgomery County-Bucks County-Chester County, PA","Philadelphia-Reading-Camden, PA-NJ-DE-MD",Montgomery County,Pennsylvania,42,091,Central,42091
+Philadelphia,37980,37964,428,"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",Metropolitan Statistical Area,"Philadelphia, PA","Philadelphia-Reading-Camden, PA-NJ-DE-MD",Delaware County,Pennsylvania,42,045,Central,42045
+Philadelphia,37980,37964,428,"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",Metropolitan Statistical Area,"Philadelphia, PA","Philadelphia-Reading-Camden, PA-NJ-DE-MD",Philadelphia County,Pennsylvania,42,101,Central,42101
+Philadelphia,37980,48864,428,"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",Metropolitan Statistical Area,"Wilmington, DE-MD-NJ","Philadelphia-Reading-Camden, PA-NJ-DE-MD",New Castle County,Delaware,10,003,Central,10003
+Philadelphia,37980,48864,428,"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",Metropolitan Statistical Area,"Wilmington, DE-MD-NJ","Philadelphia-Reading-Camden, PA-NJ-DE-MD",Cecil County,Maryland,24,015,Central,24015
+Philadelphia,37980,48864,428,"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",Metropolitan Statistical Area,"Wilmington, DE-MD-NJ","Philadelphia-Reading-Camden, PA-NJ-DE-MD",Salem County,New Jersey,34,033,Central,34033
+Seattle,42660,42644,500,"Seattle-Tacoma-Bellevue, WA",Metropolitan Statistical Area,"Seattle-Bellevue-Kent, WA","Seattle-Tacoma, WA",King County,Washington,53,033,Central,53033
+Seattle,42660,42644,500,"Seattle-Tacoma-Bellevue, WA",Metropolitan Statistical Area,"Seattle-Bellevue-Kent, WA","Seattle-Tacoma, WA",Snohomish County,Washington,53,061,Central,53061
+Seattle,42660,45104,500,"Seattle-Tacoma-Bellevue, WA",Metropolitan Statistical Area,"Tacoma-Lakewood, WA","Seattle-Tacoma, WA",Pierce County,Washington,53,053,Central,53053

@@ -1,0 +1,106 @@
+---
+pagetitle: Week 4
+output: 
+  revealjs::revealjs_presentation:
+    theme: white
+    highlight: tango
+    center: true
+    transition: none
+    reveal_options:
+      progress: true
+      slideNumber: true
+    css: ../styles-reveal.css
+bibliography: ../assignments/wk02.bib
+csl: ../apa.csl
+---
+
+## {data-background="w04-cover.png"}
+
+<style type="text/css">
+p { text-align: left; }
+</style>
+
+## Weekly Roadmap*
+
+1. Getting started with R and RStudio
+2. Plotting with `{ggplot2}`
+3. Importing and transforming data
+4. <span style="color:#1f9ac9;">**Exploratory data analysis**</span>
+5. Interactive and animated plots
+6. Mapping (will work in relational data)
+7. Text mining
+8. Flexdashboards (and shiny apps)
+9. Tidymodels
+10. Reproducible workflows
+
+<span style="color:#1f9ac9;font-size: 70%;">\*\ subject to change</span>
+
+## Today's plan
+
+* Review tips for thinking about exploratory data analysis
+* Learn some common first steps for summarizing and visualizing data while getting some practice with {`dplyr`}
+* RMarkdown goal: output to APA-style manuscript with {`papaja`} package
+
+## Today's plot inspiration
+
+<center>
+<img src="../img/wk04-inspiration.png" style="border: 0;" height=400>
+</center>
+
+<span style="font-size: 70%;">Kieran Healy, {`covdata`} package, https://kjhealy.github.io/covdata/</span>
+
+## Today's plot goal
+
+<center>
+<img src="../img/wk04-goal.png" style="border: 0;" height=600>
+</center>
+
+
+
+## Last week: Importing Data
+
+* Local files
+  * csv: `read.csv()`
+  * RData: `load()`
+  * Stata: `haven::read_dta()`
+  * SPSS: `haven::read_sav()`
+  * SAS: `haven::read_sas()`
+* Web
+  * csv: `read.csv(INSERT URL HERE)`
+  * Google Sheets: `googlesheets4::read_sheet()`
+  * APIs with `{httr}` and `{jsonlite}`
+  * web scraping with `{rvest}`
+
+## Last week: `dplyr`
+
+<center>
+<img src="../img/dplyr.png" style="border: 0;">
+</center>
+
+<span style="font-size: 70%;">https://dplyr.tidyverse.org/</span>
+
+## Exploratory Data Analysis
+
+<center>
+<img src="../img/peng.png" style="border: 0;">
+</center>
+
+<span style="font-size: 70%;">https://leanpub.com/exdata</span>
+
+## Peng's EDA Checklist
+
+<center>
+<img src="../img/eda10.png" style="border: 0;">
+</center>
+
+<span style="font-size: 70%;">Roger Peng, https://tinyurl.com/y833jdgv</span>
+
+## Tidy Tuesday Videos
+
+<iframe width="889" height="500" src="https://www.youtube.com/embed/-5HYdBq_PTM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<span style="font-size: 70%;">David Robinson, https://youtu.be/-5HYdBq_PTM</span>
+
+## RStudio {data-background="#1f9ac9"}
+
+## References
