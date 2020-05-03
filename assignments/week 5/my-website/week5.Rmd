@@ -194,8 +194,9 @@ Before we can animate the plot we need to create the static version.
                              labels = monthDayLevels)) %>%
   # plot
     ggplot(., aes(x = rank, group = country, 
-                  fill = country, color = country,
-                  country = cc)) +
+                  fill = country, color = country
+                  #,country = cc) # needed if embedding flags
+           )) +
       geom_tile(aes(y = cases/2, height = cases,
                        width = 0.9), alpha = 0.8, color = NA) +
     # if trying to embed flags
@@ -266,8 +267,13 @@ In the final step we'll use the `animate()` function to render the plot. This wi
           renderer=gifski_renderer("img/gganim.gif"))
 ```
 
+# Build the site
 
+To create the website and knit all of the files, click `Build -> Build All`. If that option does not appear, click `Build -> Configure Build Tools` and choose "website" for the tools option. Then click `Build -> Build All`.
 
+# Publish the site
+
+The contents of the `_site` directory within `my-website` are what you'll publish. All you need is a domain name (`www.mywebsite.com`) and a hosting service to store your files. A simple (and free) option is to host your files on Github pages. See [here](https://pages.github.com/) for explainers.
 
 
 
