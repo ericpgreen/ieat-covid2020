@@ -9,25 +9,28 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+  knitr::opts_chunk$set(echo = TRUE)
 
-# Interactive plot with `{plotly}`
-
-## Back to Week 1 for the static version
-
-```{r static, echo=FALSE}
-# your project is missing a few packages, so run all commented
   library(tidyverse)
   library(plotly)
   library(ggthemes)
   library(ggrepel)
   library(ggtext)
-  library(gganimate) # install.packages("gifski")
+  library(gganimate) # install.packages(c("gifski", "av"))
   library(viridis)
-  library(ggflags) # devtools::install_github("ellisp/ggflags")
-  library(countrycode) # install.packages("countrycode")
 
+# you only need these if you want to try to embed flags in the bars
+  #library(ggflags) 
+  #library(countrycode) 
+```
+
+# Interactive plot with `{plotly}`
+
+Let's start by making our Week 1 plot interactive.
+
+## Back to Week 1 for the static version
+
+```{r static, echo=FALSE}
   nyt_st <- read.csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv", stringsAsFactors = FALSE)
   
   p <- 
@@ -46,15 +49,18 @@ knitr::opts_chunk$set(echo = TRUE)
     ggplot(., aes(x=days, y=deaths, group=state, 
                              color=state)) +
       geom_line() +
+    # add more breaks if running later and deaths > 100000
       scale_y_log10(breaks = c(1, 2, 5, 10, 20, 50, 
                                100, 200, 500, 1000, 
-                               2000, 5000, 10000)) +
-      scale_x_continuous(breaks = c(1, 5, 10, 15, 20, 25, 30),
-                         limits = c(1, 30)) +
+                               2000, 5000, 10000,
+                               20000, 50000, 100000)) +
+    # add more breaks if running later with more days of data
+      scale_x_continuous(breaks = c(seq(1, 55, 5)),
+                         limits = c(1, 55)) +
       geom_text_repel(aes(label = label),
                       nudge_x = 1,
                       na.rm = TRUE) +
-      theme_fivethirtyeight() +
+      #theme_fivethirtyeight() + # this does not render correctly with plotly
       theme(plot.title.position = "plot",
             plot.caption = element_markdown(),
             legend.position = "none",
@@ -76,6 +82,8 @@ knitr::opts_chunk$set(echo = TRUE)
 That's it.
 
 # Animated plot with `{gganimate}`
+
+Now let's turn to plot animation with `{gganimate}`.
 
 ## Our inspiration
 
@@ -144,9 +152,6 @@ The original plot shows the daily leaderboard in the race to the most cases. Our
   leaderboard <- 
   cases %>%
     group_by(date) %>%
-    # mutate(rank = min_rank(-cases) * 1,
-    #        relative_to_1 = cases / cases[rank == 1],
-    #        label = paste0(" ", cases)) %>%
     mutate(rank = rank(-cases),
            relative_to_1 = cases/cases[rank == 1],
            label = paste0(" ", cases)) %>%
@@ -161,11 +166,13 @@ The original plot shows the daily leaderboard in the race to the most cases. Our
   # give a day label
     mutate(month = lubridate::month(date, label=TRUE, abbr=TRUE),
            day = lubridate::day(date),
-           monthDay = paste(month, day, sep=" ")) %>%
+           monthDay = paste(month, day, sep=" ")) # %>%
+  
+  # this next step is only needed if you are trying to embed the flags
   # convert country name to code
-    mutate(cc = countrycode(country, origin="country.name", 
-                            destination = "genc2c"),
-           cc = tolower(cc))
+    # mutate(cc = countrycode(country, origin="country.name", 
+    #                         destination = "genc2c"),
+    #        cc = tolower(cc))
 
 # get vector of unique monthDay
   monthDayLevels <- 
@@ -191,6 +198,7 @@ Before we can animate the plot we need to create the static version.
                   country = cc)) +
       geom_tile(aes(y = cases/2, height = cases,
                        width = 0.9), alpha = 0.8, color = NA) +
+    # if trying to embed flags
       #geom_flag(aes(y = cases+50), size = 20) +
       geom_text(aes(y = 0, label = paste(country, "   ")),
                     vjust = 0.2, hjust = 1, size = 10) +
@@ -242,7 +250,6 @@ In this next chunk we will tell `{gganimate}` which variable segments the plot i
 ```{r}
   animate <- 
   static +
-    #transition_time(date) +
     transition_states(monthDay,
                       transition_length = 4,
                       state_length = 1) +
@@ -256,7 +263,7 @@ In the final step we'll use the `animate()` function to render the plot. This wi
 
 ```{r, message=FALSE, warning=FALSE, eval=TRUE}
   animate(animate, fps = 10, duration = 50, width = 1000, height = 600,
-          renderer=av_renderer("img/gganim.mp4"))
+          renderer=gifski_renderer("img/gganim.gif"))
 ```
 
 
