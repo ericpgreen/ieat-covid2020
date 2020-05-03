@@ -1,0 +1,17 @@
+name: "my-website"
+title: "My Website"
+description: |
+  My Website
+output_dir: "_site"
+navbar:
+  left:
+    - text: "Week 5"
+      href: week5.html
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+output: 
+  distill::distill_article:
+    css: styles.css

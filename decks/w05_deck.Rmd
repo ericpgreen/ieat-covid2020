@@ -1,0 +1,147 @@
+---
+pagetitle: Week 5
+output: 
+  revealjs::revealjs_presentation:
+    theme: white
+    highlight: tango
+    center: true
+    transition: none
+    reveal_options:
+      progress: true
+      slideNumber: true
+    css: ../styles-reveal.css
+bibliography: ../assignments/wk02.bib
+csl: ../apa.csl
+---
+
+## {data-background="w05-cover.png"}
+
+<style type="text/css">
+p { text-align: left; }
+</style>
+
+## Weekly Roadmap*
+
+1. Getting started with R and RStudio
+2. Plotting with `{ggplot2}`
+3. Importing and transforming data
+4. Exploratory data analysis
+5. <span style="color:#1f9ac9;">**Interactive and animated plots**</span>
+6. Mapping (will work in relational data)
+7. Text mining
+8. Flexdashboards (and shiny apps)
+9. Tidymodels
+10. Reproducible workflows
+
+<span style="color:#1f9ac9;font-size: 70%;">\*\ subject to change</span>
+
+## Today's plan
+
+* Turn a `{ggplot2}` object into an interactive plot via `plotly::plot_ly()`
+* Animate a `{ggplot2}` object with `{gganimate}`
+* RMarkdown goal: output to a simple flat website
+
+## Today's plot inspiration
+
+<center>
+<img src="../img/wk05-inspiration.gif" style="border: 0;" height=400>
+</center>
+
+<span style="font-size: 70%;">Bobbie Johnson, https://tinyurl.com/ybny66vz</span>
+
+## Today's plot goal 
+
+<video width="1000" height="600" controls>
+  <source src="../img/gganim.mp4" type="video/mp4">
+</video>
+
+
+
+## Interactive plots
+
+<center>
+<img src="https://media.giphy.com/media/3og0IExSrnfW2kUaaI/giphy.gif" style="border: 0;" height=400>
+</center>
+
+## Plotly {data-background-iframe="https://plotly.com/"}
+
+## Use `plotly::plot_ly()`
+
+Use `plot_ly()` and map to the plotly.js charting library.
+
+```{r, message=FALSE, warning=FALSE, fig.height=3, echo=FALSE}
+  library(plotly)
+  p <- plot_ly(economics, x = ~date, y = ~unemploy / pop)
+  p
+```
+
+## Convert `{ggplot2}` object with `{plotly}`
+
+Or create a plot in `{ggplot2}` and `ggplotly()` it.
+
+```{r, message=FALSE, warning=FALSE, fig.height=3, echo=FALSE}
+  p <- ggplot(data = mtcars, aes(x = wt, y = mpg)) + geom_point()
+```
+
+## Animated Plots
+
+<center>
+<img src="https://media.giphy.com/media/11pNxIL9Dic39C/giphy.gif" style="border: 0;" height=400>
+</center>
+
+## `{gganimate}`
+
+`{gganimate}` is a `{ggplot2}` extension. This package makes it easy to animate a plot:
+
+1. Create a plot
+2. Add `transition_states()` to split up the data into frames
+3. Add `ease_aes()` to define how the aesthetics should change during the transition
+4. Use some `{glue}` to create frame labels
+5. Fiddle around as desired with various other functions like `enter()` and `exit()`
+
+<span style="font-size: 70%;">https://gganimate.com/articles/gganimate.html</span>
+
+
+## Example data
+
+```{r, echo=FALSE}
+  iris
+```
+
+## Static plot
+
+```{r, fig.height=3}
+  library(gganimate)
+  p <- ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) + geom_point()
+  p
+```
+
+## Animate
+
+```{r, fig.height=3}
+  anim <- p + 
+    transition_states(Species, transition_length = 2, state_length = 1)
+  anim
+```
+
+## Easing
+
+```{r, fig.height=3}
+  anim + 
+    ease_aes('cubic-in-out') # Slow start and end for a smoother look
+```
+
+## Labeling 
+
+```{r, fig.height=3}
+  anim + 
+    ggtitle('Now showing {closest_state}',
+            subtitle = 'Frame {frame} of {nframes}')
+```
+
+## Distill {data-background-iframe="https://rstudio.github.io/distill/"}
+
+
+## RStudio {data-background="#1f9ac9"}
+
+## References

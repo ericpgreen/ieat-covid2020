@@ -1,0 +1,20 @@
+---
+title: "About this site"
+description: |
+  Some additional details about the website
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+Here's a sample about page. Let's add the `{plotly}` figure from the slide deck.
+
+```{r, message=FALSE, warning=FALSE, echo=TRUE}
+  library(tidyverse)
+  library(plotly)
+  p <- ggplot(mtcars, aes(x = wt, y = mpg)) + geom_point()
+  ggplotly(p)
+```
+
+Now open the `_site.yml` file. We'll use this file to tell R how to layout the site.

@@ -1,0 +1,269 @@
+---
+title: "Week 5"
+description: |
+  Let's make some interactive and animated plots!
+output:
+  distill::distill_article:
+    toc: true
+    toc_depth: 2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Interactive plot with `{plotly}`
+
+## Back to Week 1 for the static version
+
+```{r static, echo=FALSE}
+# your project is missing a few packages, so run all commented
+  library(tidyverse)
+  library(plotly)
+  library(ggthemes)
+  library(ggrepel)
+  library(ggtext)
+  library(gganimate) # install.packages("gifski")
+  library(viridis)
+  library(ggflags) # devtools::install_github("ellisp/ggflags")
+  library(countrycode) # install.packages("countrycode")
+
+  nyt_st <- read.csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv", stringsAsFactors = FALSE)
+  
+  p <- 
+  nyt_st %>%
+    group_by(state) %>%
+    mutate(dailyDeaths = c(deaths[1], diff(deaths))) %>%
+    filter(dailyDeaths >= 3) %>%
+    mutate(days = 1:n()) %>%
+    mutate(label = if_else(days == max(days), 
+                           state, 
+                           NA_character_)) %>%
+    ungroup() %>%
+    filter(state == "Florida" | 
+           state == "New York" |
+           state == "Washington") %>%
+    ggplot(., aes(x=days, y=deaths, group=state, 
+                             color=state)) +
+      geom_line() +
+      scale_y_log10(breaks = c(1, 2, 5, 10, 20, 50, 
+                               100, 200, 500, 1000, 
+                               2000, 5000, 10000)) +
+      scale_x_continuous(breaks = c(1, 5, 10, 15, 20, 25, 30),
+                         limits = c(1, 30)) +
+      geom_text_repel(aes(label = label),
+                      nudge_x = 1,
+                      na.rm = TRUE) +
+      theme_fivethirtyeight() +
+      theme(plot.title.position = "plot",
+            plot.caption = element_markdown(),
+            legend.position = "none",
+            axis.title.x = element_text()) + 
+      labs(title = "Put your main headline here",
+           subtitle = "Daily deaths with coronavirus, by number of days since 3 daily deaths first recorded",
+           x = "Number of days since 3 daily deaths first recorded", 
+           caption = "Data from *The New York Times*, based on reports from state and local health agencies.")
+      
+  p
+```
+
+## Make interactive with `plotly::ggplotly()`
+
+```{r ggplotly}
+  ggplotly(p)
+```
+
+That's it.
+
+# Animated plot with `{gganimate}`
+
+## Our inspiration
+
+Our inspiration comes from Bobbie Johnson in [*MIT Technology Review*](https://www.technologyreview.com/2020/03/27/950263/the-covid-19-pandemic-in-two-animated-charts/).
+
+<!-- I just copied/pasted Twitter embed code -->
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">What are your favorite animated <a href="https://twitter.com/hashtag/COVID19?src=hash&amp;ref_src=twsrc%5Etfw">#COVID19</a> charts? Tomorrow is Week 5 of &quot;I Eat <a href="https://twitter.com/hashtag/DataScience?src=hash&amp;ref_src=twsrc%5Etfw">#DataScience</a> for Breakfast: Pandemic Ed.&quot; and I want to cover animated charts. Looking for a good one to reproduce in <a href="https://twitter.com/hashtag/RStats?src=hash&amp;ref_src=twsrc%5Etfw">#RStats</a>.<a href="https://t.co/1h50KIj0HR">https://t.co/1h50KIj0HR</a><br><br>Contender from <a href="https://twitter.com/bobbie?ref_src=twsrc%5Etfw">@bobbie</a> (<a href="https://t.co/tFOhM4hPtW">https://t.co/tFOhM4hPtW</a>) <a href="https://t.co/BDcfZ4HVtu">pic.twitter.com/BDcfZ4HVtu</a></p>&mdash; Eric Green (@ericpgreen) <a href="https://twitter.com/ericpgreen/status/1255848835865350144?ref_src=twsrc%5Etfw">April 30, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+## Setup
+
+Just as in Week 3, the data for today's plot come from the [JHU Center for Systems Science and Engineering data repository](https://github.com/CSSEGISandData/COVID-19).
+
+```{r load}
+# get the data
+# source: https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series
+  
+  cases_wide <- read.csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv", stringsAsFactors = FALSE)
+  
+# show a small slice of the data
+  cases_wide %>%
+    slice(1:10) %>%
+    select(Province.State, Country.Region, Lat, Long, X1.22.20) %>%
+    knitr::kable() %>%
+    kableExtra::kable_styling()
+```
+
+## Wrangle the data from wide to long
+
+The data come to us in a wide format with column after column of daily culumative case counts. We need to pivot this table to a long version, but you might also recall that we need to aggregate some sub-national data to the national level. We did this all before in Week 3.
+
+```{r tolong}
+  cases <- 
+  cases_wide %>%
+  # sum subnational data to get national totals
+    select(-Lat, -Long) %>%                 # drop these columns
+    group_by(Country.Region) %>%            # group by country
+    mutate_at(vars(starts_with("X")),       # sum each daily column
+              funs(sum)) %>%                #  by county
+    ungroup() %>%
+    distinct(Country.Region,                # countries with subnational
+             .keep_all = TRUE) %>%          #  have repetitive data now 
+    select(-Province.State) %>%             #  so drop duplicates
+  # pivot wide to long
+    pivot_longer(cols = starts_with("X"),   # take the daily cases
+                 names_to = "date",         #  put col headings in date
+                 names_prefix = "X",        #  pattern is X variables
+                 values_to = "cases") %>%   #  put case values in case
+    mutate(date = lubridate::mdy(date)) %>% # create proper date var
+    rename("country"="Country.Region") %>%  # give nicer var name
+    filter(country!="Diamond Princess")     # drop diamond princess
+    
+# show a small slice of the data
+  cases %>%
+    slice(1:10) %>%
+    knitr::kable() %>%
+    kableExtra::kable_styling()
+```
+
+
+## Limit to 10 country-observations per day
+
+The original plot shows the daily leaderboard in the race to the most cases. Our dataset has every country, every day. Let's limit it to the top 10 countries every day by filtering out some rows. We'll follow [this nice approach by Joe Tran](https://towardsdatascience.com/https-towardsdatascience-com-everything-you-need-to-know-about-animated-bar-charts-be033f398619).
+
+```{r top10}
+  leaderboard <- 
+  cases %>%
+    group_by(date) %>%
+    # mutate(rank = min_rank(-cases) * 1,
+    #        relative_to_1 = cases / cases[rank == 1],
+    #        label = paste0(" ", cases)) %>%
+    mutate(rank = rank(-cases),
+           relative_to_1 = cases/cases[rank == 1],
+           label = paste0(" ", cases)) %>%
+  # lots of countries tied for zero at the start
+  # so order by rank and then alphabetical by country
+    arrange(rank, country) %>%
+  # give new ranks to break ties with alphabetical country names
+    mutate(rank = 1:n()) %>%
+  # limit to top 10 per day
+    filter(rank <= 10) %>%
+    ungroup() %>%
+  # give a day label
+    mutate(month = lubridate::month(date, label=TRUE, abbr=TRUE),
+           day = lubridate::day(date),
+           monthDay = paste(month, day, sep=" ")) %>%
+  # convert country name to code
+    mutate(cc = countrycode(country, origin="country.name", 
+                            destination = "genc2c"),
+           cc = tolower(cc))
+
+# get vector of unique monthDay
+  monthDayLevels <- 
+  leaderboard %>% 
+    distinct(date, .keep_all = TRUE) %>% 
+    pull(monthDay)
+```
+
+## Create the static plot
+
+Before we can animate the plot we need to create the static version.
+
+```{r ggplot}
+  static <- 
+  leaderboard %>%
+  # convert to factor
+    mutate(monthDay = factor(monthDay, 
+                             levels = monthDayLevels,
+                             labels = monthDayLevels)) %>%
+  # plot
+    ggplot(., aes(x = rank, group = country, 
+                  fill = country, color = country,
+                  country = cc)) +
+      geom_tile(aes(y = cases/2, height = cases,
+                       width = 0.9), alpha = 0.8, color = NA) +
+      #geom_flag(aes(y = cases+50), size = 20) +
+      geom_text(aes(y = 0, label = paste(country, "   ")),
+                    vjust = 0.2, hjust = 1, size = 10) +
+      geom_text(aes(y=cases+50, label = label, hjust=0),
+                    size = 10) +
+      coord_flip(clip = "off", expand = TRUE) +
+      scale_x_reverse() +
+  
+    # making it look nice
+      scale_fill_viridis_d(option = "plasma") +
+      scale_color_viridis_d(option = "plasma") +
+      theme_minimal() +
+      theme(axis.line=element_blank(),
+            axis.text.x=element_blank(),
+            axis.text.y=element_blank(),
+            axis.ticks=element_blank(),
+            axis.title.x=element_blank(),
+            axis.title.y=element_blank(),
+            legend.position="none",
+            panel.background=element_blank(),
+            panel.border=element_blank(),
+            panel.grid.major=element_blank(),
+            panel.grid.minor=element_blank(),
+            panel.grid.major.x = element_line(size=.4, 
+                                              color="grey" ),
+            panel.grid.minor.x = element_line(size=.1, 
+                                              color="grey" ),
+            plot.title.position = "plot",
+            plot.title=element_text(size=20, 
+                                    face="bold", 
+                                    colour="#313632"),
+            plot.subtitle=element_text(size=50, 
+                                       color="#a3a5a8"),
+            plot.caption =element_text(size=15, 
+                                       color="#313632"),
+            plot.background=element_blank(),
+            plot.margin = margin(1, 9, 1, 9, "cm")) +
+      labs(title = 'Cumulative number confirmed COVID-19 cases by date and country',  
+           subtitle = '{closest_state}',
+           caption  = "Data: Johns Hopkins CCSE, https://tinyurl.com/qooo4fp")
+
+static
+```
+
+## Define transition states and easing
+
+In this next chunk we will tell `{gganimate}` which variable segments the plot into different frame and define the nature of the transitions and easing.
+
+```{r}
+  animate <- 
+  static +
+    #transition_time(date) +
+    transition_states(monthDay,
+                      transition_length = 4,
+                      state_length = 1) +
+    ease_aes('cubic-in-out') +
+    view_follow(fixed_x = TRUE) 
+```
+
+## Create a gif
+
+In the final step we'll use the `animate()` function to render the plot. This will take a while.
+
+```{r, message=FALSE, warning=FALSE, eval=TRUE}
+  animate(animate, fps = 10, duration = 50, width = 1000, height = 600,
+          renderer=av_renderer("img/gganim.mp4"))
+```
+
+
+
+
+
+
+
+
+

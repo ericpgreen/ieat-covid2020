@@ -1,0 +1,25 @@
+---
+title: "My Website"
+description: |
+  Welcome to the website. I hope you enjoy it!
+site: distill::distill_website
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+# Learn more about creating websites with Distill at:
+# https://rstudio.github.io/distill/website.html
+
+```
+
+This is the main page. To set up the site I just ran the following:
+
+```
+library(distill)
+create_website(dir = "my-website", title = "My Website")
+```
+
+It created the `my-website` directory and the initial files. Hit `knit` to see what it looks like.
+
+Now open the `about.Rmd` file. It lives in the `my-website` directory. Find it in the files tab.
