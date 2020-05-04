@@ -81,6 +81,7 @@ Or create a plot in `{ggplot2}` and `ggplotly()` it.
 
 ```{r, message=FALSE, warning=FALSE, fig.height=3, echo=FALSE}
   p <- ggplot(data = mtcars, aes(x = wt, y = mpg)) + geom_point()
+  ggplotly(p)
 ```
 
 ## Animated Plots
