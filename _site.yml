@@ -22,6 +22,8 @@ navbar:
           href: w4.html
         - text: "Week 5"
           href: w5.html
+        - text: "Week 6"
+          href: w6.html
   right:
     - text: "The Method Section"
       href: "https://themethodsection.com/"

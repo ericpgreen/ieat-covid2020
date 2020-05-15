@@ -30,10 +30,10 @@ knitr::include_graphics("img/wk05-inspiration.gif")
 </center> 
 <br>
 
-Check back for the video!
+<iframe width="800" height="450" src="https://www.youtube.com/embed/hyi3YgTAKLM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <br>
 
 ## Weekly Post-Session Challenge
 
-Check back for the challenge!
+This week's challenge is to use `{gganimate}` to animate our Week 1 line plot. Start by watching this 20-min [this rstudio::conf 2019 talk](https://rstudio.com/resources/rstudioconf-2019/gganimate-live-cookbook/) by Thomas Lin Pederson on `{gganimate}`. 
