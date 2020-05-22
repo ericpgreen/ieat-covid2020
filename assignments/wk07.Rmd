@@ -180,7 +180,7 @@ We're in the age of big data, and text mining has never been more popular or eas
 My first experience with text mining was in graduate school, probably around 2006. A friend wrote me a PERL script to pull all of the wires from *LexisNexis* mentioning the Lord's Resistance Army going back 20 years. Wires have a standard format, so we were able to extract the date, location, and casualty figures for each attack. I had to do a lot of manual clean-up, but it was magic. 
 
 ```{r names, fig.cap="Graduate school me worked in SPSS and named files like an animal.", echo=FALSE}
-  knitr::include_graphics("../../img/shittyfiles.png")
+  knitr::include_graphics("../img/shittyfiles.png")
 ```
 
 Fast forward about a decade and I returned to text mining in my work with Nivi. I was sitting on a corpus of nearly 180,000 text messages, and I needed a way to analyze them automatically. Fortunately for me, Julia Silge and David Robinson wrote a book and package called [`{tidytext}`](https://www.tidytextmining.com/) and gave both away for free. My colleagues and I [published a paper](https://gatesopenresearch.org/articles/3-1475) with an accompanying tutorial on how to use the package. We found astonishing results about what men of all age groups want to discuss. 
@@ -471,7 +471,8 @@ In addition to summarizing the frequency of words, we can also analyze the senti
 > All three of these lexicons are based on unigrams, i.e., single words. These lexicons contain many English words and the words are assigned scores for positive/negative sentiment, and also possibly emotions like joy, anger, sadness, and so forth. The nrc lexicon categorizes words in a binary fashion (“yes”/“no”) into categories of positive, negative, anger, anticipation, disgust, fear, joy, sadness, surprise, and trust. The bing lexicon categorizes words in a binary fashion into positive and negative categories. The AFINN lexicon assigns words with a score that runs between -5 and 5, with negative scores indicating negative sentiment and positive scores indicating positive sentiment.
 
 ```{r lexicon, message=FALSE, echo=FALSE}
-  # install.packages("textdata")
+# install.packages("textdata")
+# run each line in the console and accept the terms to download
   afinn <- get_sentiments("afinn")
   bing <- get_sentiments("bing")
   nrc <- get_sentiments("nrc")
